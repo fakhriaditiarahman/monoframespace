@@ -9,120 +9,72 @@ Website resmi Monoframe - Creative brand yang menaungi Monobox (Photobooth), Mon
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **Database & Auth**: Supabase
-- **Icons**: Lucide React
+- **Icons**: Lucide React + Material Symbols
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18+ installed
-- npm, yarn, pnpm, or bun
-- Supabase account (for backend features)
-
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd monoframestudio
-```
+# Clone repository
+git clone https://github.com/fakhriaditiarahman/monoframespace.git
+cd monoframespace
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Copy the environment file:
-```bash
+# Setup environment variables
 cp .env.local.example .env.local
-```
+# Edit .env.local dengan Supabase credentials Anda
 
-4. Update `.env.local` with your Supabase credentials:
-```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
-
-5. Run the development server:
-```bash
+# Run development server
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Buka [http://localhost:3000](http://localhost:3000) di browser.
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── (public)/
-│   │   ├── page.tsx           # Landing page
-│   │   ├── monobox/           # Monobox photobooth page
-│   │   ├── monodev/           # Monodev web dev page
-│   │   └── studio/            # Monoframe Studio page
-│   ├── admin/
-│   │   ├── login/             # Admin login page
-│   │   ├── layout.tsx         # Admin layout with sidebar
-│   │   └── dashboard/
-│   │       ├── page.tsx       # Dashboard home
-│   │       ├── orders/        # Orders management
-│   │       ├── portfolios/    # Portfolio CRUD
-│   │       ├── testimonials/  # Testimonials CRUD
-│   │       ├── content/       # Page content management
-│   │       └── settings/      # Settings page
-│   ├── layout.tsx             # Root layout
-│   └── globals.css            # Global styles
+│   ├── admin/           # Admin panel (login, dashboard, CRUD)
+│   ├── monobox/         # Monobox service page
+│   ├── monodev/         # Monodev service page
+│   ├── studio/          # Monoframe Studio page
+│   ├── layout.tsx       # Root layout
+│   ├── page.tsx         # Landing page
+│   └── globals.css      # Global styles
 ├── components/
-│   ├── ui/                    # shadcn/ui components
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   ├── select.tsx
-│   │   └── textarea.tsx
-│   └── layout/
-│       ├── Header.tsx         # Site header
-│       └── Footer.tsx         # Site footer
+│   ├── layout/          # Header, Footer
+│   └── ui/              # shadcn/ui components
 ├── lib/
-│   ├── supabase.ts            # Supabase client
-│   └── utils.ts               # Utility functions
+│   ├── supabase.ts      # Supabase client
+│   └── utils.ts         # Utilities
 └── types/
-    └── database.ts            # TypeScript types
+    └── database.ts      # TypeScript types
 ```
 
-## Pages Overview
+## Pages
 
-### Public Pages
+### Public
+| Page | Route |
+|------|-------|
+| Home | `/` |
+| Monobox | `/monobox` |
+| Monodev | `/monodev` |
+| Studio | `/studio` |
 
-| Page | Route | Description |
-|------|-------|-------------|
-| Home | `/` | Landing page with overview of all services |
-| Monobox | `/monobox` | Photobooth services, packages, gallery, booking form |
-| Monodev | `/monodev` | Web development services, portfolio, project request form |
-| Studio | `/studio` | Photography studio, packages, gallery, booking form |
-
-### Admin Pages
-
-| Page | Route | Description |
-|------|-------|-------------|
-| Login | `/admin/login` | Admin authentication |
-| Dashboard | `/admin/dashboard` | Overview and stats |
-| Orders | `/admin/dashboard/orders` | Manage bookings |
-| Portfolios | `/admin/dashboard/portfolios` | CRUD for portfolio items |
-| Testimonials | `/admin/dashboard/testimonials` | CRUD for testimonials |
-| Content | `/admin/dashboard/content` | Edit page content |
-| Settings | `/admin/dashboard/settings` | Business settings |
-
-## Database Schema
-
-See PRD.md for complete database schema. Main tables:
-
-- `profiles` - User profiles with roles
-- `orders` - Booking/orders data
-- `portfolios` - Portfolio items
-- `testimonials` - Client testimonials
-- `page_content` - Dynamic page content
-- `settings` - Business settings
+### Admin
+| Page | Route |
+|------|-------|
+| Login | `/admin/login` |
+| Dashboard | `/admin/dashboard` |
+| Orders | `/admin/dashboard/orders` |
+| Portfolios | `/admin/dashboard/portfolios` |
+| Testimonials | `/admin/dashboard/testimonials` |
+| Content | `/admin/dashboard/content` |
+| Settings | `/admin/dashboard/settings` |
 
 ## Scripts
 
@@ -133,18 +85,10 @@ See PRD.md for complete database schema. Main tables:
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
 
-## Deployment
-
-The easiest way to deploy is using [Vercel](https://vercel.com):
-
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Add environment variables
-4. Deploy
 
 ## License
 
-This project is proprietary and confidential.
+Proprietary and confidential.
 
 ---
 
