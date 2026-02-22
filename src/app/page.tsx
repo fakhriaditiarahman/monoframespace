@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { motion, useScroll, useTransform, MathUtils } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { Header } from "@/components/layout/Header"
 
 // ---- SCENE 1: THE SPARK (HERO) ----
