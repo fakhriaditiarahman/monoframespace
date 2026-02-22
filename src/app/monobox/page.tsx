@@ -78,6 +78,20 @@ export default function MonoboxPage() {
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark">
+      {/* Custom Monobox Header */}
+      <header className="sticky top-0 z-50 w-full border-b border-pink-100 dark:border-pink-900 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between max-w-[1200px]">
+          <Link href="/" className="font-black text-2xl tracking-tighter text-monobox hover:text-monobox-dark transition-colors">MONOBOX</Link>
+          <nav className="hidden md:flex gap-6 text-sm font-bold text-slate-600 dark:text-slate-300">
+            <Link href="#packages" className="hover:text-monobox transition-colors">Paket</Link>
+            <Link href="#booking" className="hover:text-monobox transition-colors">Hubungi</Link>
+          </nav>
+          <Button asChild size="sm" className="bg-monobox hover:bg-monobox-dark text-white rounded-full">
+            <Link href="#booking">Pesan Sekarang</Link>
+          </Button>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <main className="flex-grow">
         <section className="px-6 py-12 lg:px-40 lg:py-20 flex flex-col items-center">

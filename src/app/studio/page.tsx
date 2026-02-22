@@ -82,9 +82,23 @@ export default function StudioPage() {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display antialiased">
+      {/* Custom Studio Header */}
+      <header className="absolute top-0 w-full z-50 border-b border-white/10 bg-transparent">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <Link href="/" className="font-black text-2xl tracking-widest uppercase text-white hover:text-sky-200 transition-colors">STUDIO</Link>
+          <nav className="hidden md:flex gap-8 text-sm font-medium text-sky-100 uppercase tracking-wider">
+            <Link href="#space" className="hover:text-white transition-colors">Ruangan</Link>
+            <Link href="#book" className="hover:text-white transition-colors">Harga</Link>
+          </nav>
+          <Button asChild className="bg-white text-slate-900 hover:bg-sky-50 uppercase tracking-widest text-xs font-bold rounded-none px-6">
+            <Link href="#book">Pesan Sesi</Link>
+          </Button>
+        </div>
+      </header>
+
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative w-full h-[600px] lg:h-[750px] overflow-hidden bg-slate-900">
+        <section className="relative w-full h-[600px] lg:h-[750px] overflow-hidden bg-slate-900 pt-20">
           <div className="absolute inset-0 z-0">
             <div
               className="h-full w-full bg-cover bg-center transition-transform duration-[20s] hover:scale-105"

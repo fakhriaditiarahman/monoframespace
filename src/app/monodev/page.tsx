@@ -73,6 +73,23 @@ export default function MonodevPage() {
 
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased">
+      {/* Custom Monodev Header */}
+      <header className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="material-symbols-outlined text-monodev group-hover:rotate-12 transition-transform">terminal</span>
+            <span className="font-extrabold tracking-tight text-xl dark:text-white group-hover:text-monodev transition-colors">MONODEV</span>
+          </Link>
+          <nav className="hidden md:flex gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
+            <Link href="#services" className="hover:text-monodev transition-colors">Layanan</Link>
+            <Link href="#showcase" className="hover:text-monodev transition-colors">Portofolio</Link>
+          </nav>
+          <Button asChild size="sm" variant="outline" className="border-monodev text-monodev hover:bg-monodev hover:text-white rounded-md">
+            <Link href="#contact">Hubungi Kami</Link>
+          </Button>
+        </div>
+      </header>
+
       <main>
         {/* Hero Section */}
         <section className="relative isolate overflow-hidden pt-14 pb-16 sm:pb-20 lg:pb-28 bg-white dark:bg-background-dark">

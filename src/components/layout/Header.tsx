@@ -2,109 +2,120 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <nav className="sticky top-4 z-50 mx-4 mt-4 rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-xl dark:border-gray-800 dark:bg-deep-blue/80">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex size-8 items-center justify-center rounded bg-gradient-to-br from-monobox via-monodev to-monostudio text-white">
-              <span className="material-symbols-outlined text-[20px]">grid_view</span>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-text-main dark:text-white">Monoframe</span>
+    <>
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-4" : "py-8"
+          }`}
+      >
+        <div className="mx-auto max-w-7xl px-6 md:px-12 flex items-center justify-between">
+
+          {/* Brand Logo - Minimal Text */}
+          <Link href="/" className="relative z-50 group">
+            <span className="text-xl md:text-2xl font-black tracking-tighter text-white mix-blend-difference hover:text-white/70 transition-colors uppercase">
+              Monoframe
+            </span>
           </Link>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            <Link
-              href="/#about"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200 dark:hover:text-monodev"
-            >
-              Tentang
-            </Link>
-            <Link
-              href="/#services"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200 dark:hover:text-monodev"
-            >
-              Layanan
-            </Link>
-            <Link
-              href="/#portfolio"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200 dark:hover:text-monodev"
-            >
-              Portofolio
-            </Link>
-            <Link
-              href="/#contact"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200 dark:hover:text-monodev"
-            >
-              Kontak
-            </Link>
-          </div>
-
-          {/* CTA Button */}
-          <div className="flex items-center gap-4">
-            <Button asChild className="hidden sm:flex bg-deep-blue hover:bg-monodev dark:bg-monodev dark:hover:bg-blue-600">
-              <Link href="/#contact">Minta Penawaran</Link>
-            </Button>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden flex items-center text-text-main dark:text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <span className="material-symbols-outlined">menu</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-white dark:bg-deep-blue">
-          <nav className="container py-4 flex flex-col space-y-4">
-            <Link
-              href="/#about"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tentang
-            </Link>
-            <Link
-              href="/#services"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Layanan
-            </Link>
-            <Link
-              href="/#portfolio"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Portofolio
-            </Link>
-            <Link
-              href="/#contact"
-              className="text-sm font-medium text-text-main hover:text-monodev transition-colors dark:text-slate-200"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Kontak
-            </Link>
-            <Button asChild className="w-full bg-monodev hover:bg-blue-600">
-              <Link href="/#contact" onClick={() => setMobileMenuOpen(false)}>
-                Minta Penawaran
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-10 mix-blend-difference">
+            {["Studio", "Monobox", "Monodev"].map((item) => (
+              <Link
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-sm font-bold tracking-widest text-white uppercase relative overflow-hidden group"
+              >
+                <span className="relative z-10">{item}</span>
+                <span className="absolute left-0 bottom-0 w-full h-[1px] bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
-            </Button>
-          </nav>
+            ))}
+          </div>
+
+          {/* Hamburger Menu Toggle (Desktop + Mobile) */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all z-50 mix-blend-difference text-white"
+          >
+            <div className="flex flex-col gap-1.5 items-end justify-center w-5 h-5">
+              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-5 rotate-45 translate-y-2" : "w-5"}`} />
+              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-0 opacity-0" : "w-4"}`} />
+              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-5 -rotate-45 -translate-y-2" : "w-3"}`} />
+            </div>
+          </button>
         </div>
-      )}
-    </nav>
+      </motion.nav>
+
+      {/* Fullscreen Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-black text-white flex flex-col justify-center px-6 md:px-24"
+          >
+            <div className="max-w-7xl mx-auto w-full flex flex-col items-start gap-8">
+              {/* Massive Menu Links */}
+              {[
+                { label: "Home", href: "/" },
+                { label: "Monoframe Studio", href: "/#studio" },
+                { label: "Monobox", href: "/#monobox" },
+                { label: "Monodev", href: "/#monodev" },
+                { label: "Contact", href: "/#contact" },
+              ].map((link, i) => (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="group flex items-center gap-6"
+                  >
+                    <span className="text-4xl md:text-8xl font-black tracking-tighter uppercase text-transparent text-stroke-1 hover:text-white transition-all duration-500">
+                      {link.label}
+                    </span>
+                    <span className="material-symbols-outlined text-4xl opacity-0 -translate-x-8 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0">
+                      arrow_forward
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-12 text-zinc-500 flex flex-col md:flex-row gap-8 uppercase tracking-widest text-sm font-medium"
+              >
+                <a href="#" className="hover:text-white transition-colors">Instagram</a>
+                <a href="#" className="hover:text-white transition-colors">Twitter</a>
+                <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
