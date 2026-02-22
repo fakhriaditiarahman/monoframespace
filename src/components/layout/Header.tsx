@@ -39,8 +39,8 @@ export function Header() {
             {["Studio", "Monobox", "Monodev"].map((item) => (
               <Link
                 key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-sm font-bold tracking-widest text-white uppercase relative overflow-hidden group"
+                href={`/${item.toLowerCase()}`}
+                className="text-sm font-bold tracking-widest text-white uppercase relative overflow-hidden group z-50 pointer-events-auto"
               >
                 <span className="relative z-10">{item}</span>
                 <span className="absolute left-0 bottom-0 w-full h-[1px] bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
@@ -76,9 +76,9 @@ export function Header() {
               {/* Massive Menu Links */}
               {[
                 { label: "Home", href: "/" },
-                { label: "Monoframe Studio", href: "/#studio" },
-                { label: "Monobox", href: "/#monobox" },
-                { label: "Monodev", href: "/#monodev" },
+                { label: "Monoframe Studio", href: "/studio" },
+                { label: "Monobox", href: "/monobox" },
+                { label: "Monodev", href: "/monodev" },
                 { label: "Contact", href: "/#contact" },
               ].map((link, i) => (
                 <motion.div

@@ -71,12 +71,12 @@ export default function HomePage() {
             />
           </div>
 
-          <motion.div style={{ y: heroY, opacity }} className="relative z-10 w-full max-w-screen-2xl mx-auto flex flex-col mt-20">
+          <motion.div style={{ y: heroY, opacity }} className="relative z-10 w-full max-w-screen-2xl mx-auto flex flex-col mt-20 pointer-events-none">
             <motion.h1
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
-              className="text-[12vw] leading-[0.85] font-black tracking-tighter uppercase"
+              className="text-5xl md:text-[12vw] leading-[0.85] font-black tracking-tighter uppercase"
             >
               <div className="overflow-hidden"><motion.div variants={fadeIn}>We Build</motion.div></div>
               <div className="overflow-hidden flex gap-4 md:gap-8 items-center">
@@ -100,7 +100,7 @@ export default function HomePage() {
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" as any }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
           >
             <span className="text-xs tracking-widest uppercase font-bold text-zinc-500">Scroll</span>
             <div className="w-[1px] h-12 bg-white/20 overflow-hidden">
@@ -129,10 +129,10 @@ export default function HomePage() {
         </section>
 
         {/* 3. EXPERTISE / SERVICES */}
-        <section id="services" className="py-32 px-6 md:px-12 max-w-screen-2xl mx-auto relative z-10 bg-black">
-          <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase mb-6 md:mb-0">Pilar<br /><span className="text-transparent text-stroke-1">Keahlian</span></h2>
-            <p className="text-xl md:text-2xl text-zinc-500 max-w-lg">Pendekatan tripartit kami memastikan setiap aspek visual dan digital brand Anda ditangani oleh ahlinya.</p>
+        <section id="services" className="py-20 md:py-32 px-6 md:px-12 max-w-screen-2xl mx-auto relative z-10 bg-black">
+          <div className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <h2 className="text-4xl md:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-0">Pilar<br /><span className="text-transparent text-stroke-1">Keahlian</span></h2>
+            <p className="text-lg md:text-2xl text-zinc-500 max-w-lg">Pendekatan tripartit kami memastikan setiap aspek visual dan digital brand Anda ditangani oleh ahlinya.</p>
           </div>
 
           <div className="flex flex-col border-t border-white/20">
@@ -163,10 +163,10 @@ export default function HomePage() {
         </section>
 
         {/* 4. PORTFOLIO (BENTO GRID) */}
-        <section id="portfolio" className="py-32 px-6 md:px-12 bg-zinc-950 relative z-10 rounded-t-[3rem]">
+        <section id="portfolio" className="py-20 md:py-32 px-6 md:px-12 bg-zinc-950 relative z-10 rounded-t-[3rem]">
           <div className="max-w-screen-2xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-              <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">Karya<br /><span className="text-transparent text-stroke-1">Unggulan</span></h2>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
+              <h2 className="text-4xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">Karya<br /><span className="text-transparent text-stroke-1">Unggulan</span></h2>
               <Link href="/portfolio" className="inline-flex items-center gap-4 text-xl font-bold uppercase tracking-widest hover:text-zinc-400 transition-colors group">
                 Lihat Semua
                 <span className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
@@ -206,7 +206,7 @@ export default function HomePage() {
         </section>
 
         {/* 5. MASSIVE FOOTER / CTA */}
-        <section id="contact" className="py-32 px-6 md:px-12 bg-black relative z-10 flex flex-col items-center justify-center min-h-[80vh]">
+        <section id="contact" className="py-20 md:py-32 px-6 md:px-12 bg-black relative z-10 flex flex-col items-center justify-center min-h-[80vh]">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -217,7 +217,7 @@ export default function HomePage() {
             <div className="inline-block px-6 py-3 rounded-full border border-white/20 text-sm font-bold uppercase tracking-widest mb-12">
               Mulai Proyek Anda
             </div>
-            <h2 className="text-[10vw] md:text-[8vw] font-black tracking-tighter uppercase leading-[0.85] mb-12 hover:text-transparent hover:text-stroke-2 transition-all duration-500 cursor-pointer">
+            <h2 className="text-4xl md:text-[8vw] font-black tracking-tighter uppercase leading-[0.85] mb-12 hover:text-transparent hover:text-stroke-2 transition-all duration-500 cursor-pointer">
               Mari <br className="md:hidden" />Berkolaborasi
             </h2>
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 text-xl md:text-3xl font-bold uppercase tracking-widest text-zinc-500">

@@ -112,7 +112,7 @@ export default function StudioPage() {
                 <span className="mr-2 h-2 w-2 rounded-full bg-monostudio animate-pulse"></span>
                 Pemesanan Musim Baru Dibuka
               </div>
-              <h1 className="text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl">
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl">
                 Menangkap Esensi <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 to-white">Di Setiap Bingkai.</span>
               </h1>
@@ -177,9 +177,9 @@ export default function StudioPage() {
                 Studio kami seluas 2.000 kaki persegi dilengkapi dinding cyclorama, ruang ganti privat, dan peralatan pencahayaan Profoto terdepan di industri.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-auto md:h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:h-[500px] auto-rows-[200px]">
               {studioImages.map((img, index) => (
-                <div key={index} className={`${img.span} relative overflow-hidden rounded-xl bg-sky-50 ${img.span === 'md:col-span-2 md:row-span-2' ? 'md:col-span-2 md:row-span-2' : ''}`}>
+                <div key={index} className={`relative overflow-hidden rounded-xl bg-sky-50 ${img.span ? img.span : 'md:col-span-1 md:row-span-1'}`}>
                   <img alt={img.alt} className="h-full w-full object-cover" src={img.src} />
                   {img.label && (
                     <div className={`absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded text-xs font-semibold text-slate-900 backdrop-blur-sm ${img.label === 'Lihat Galeri' ? 'bg-sky-950 text-white' : ''}`}>
@@ -214,7 +214,7 @@ export default function StudioPage() {
                 </div>
               </div>
             </div>
-            <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
+            <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
               {packages.map((pkg, index) => (
                 <Card
                   key={index}
@@ -283,12 +283,12 @@ export default function StudioPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 gap-2 text-center text-sm mb-2">
+                  <div className="grid grid-cols-7 gap-1 md:gap-2 text-center text-xs md:text-sm mb-2">
                     {['Mi', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'].map((day) => (
-                      <span key={day} className="text-slate-400 font-medium py-2">{day}</span>
+                      <span key={day} className="text-slate-400 font-medium py-1 md:py-2">{day}</span>
                     ))}
                   </div>
-                  <div className="grid grid-cols-7 gap-2">
+                  <div className="grid grid-cols-7 gap-1 md:gap-2">
                     {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
                       const isToday = day === 8
                       const isAvailable = [3, 4, 8, 10, 11, 15, 17, 18, 22, 24, 25].includes(day)
@@ -296,7 +296,7 @@ export default function StudioPage() {
                         <button
                           key={day}
                           onClick={() => setSelectedDate(day)}
-                          className={`p-3 text-sm rounded-lg transition-colors ${isToday
+                          className={`p-2 md:p-3 text-xs md:text-sm rounded-lg transition-colors ${isToday
                             ? 'bg-monostudio text-white font-semibold shadow-md shadow-sky-200'
                             : isAvailable
                               ? 'text-slate-700 hover:bg-sky-50 dark:text-slate-300 dark:hover:bg-slate-800'
@@ -333,7 +333,7 @@ export default function StudioPage() {
                 </div>
                 <Card className="bg-white rounded-2xl shadow-lg shadow-sky-100/50 border border-sky-100 p-6 dark:bg-slate-900 dark:border-slate-800">
                   <form className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">Nama Depan</Label>
                         <Input id="firstName" placeholder="John" className="mt-1" />

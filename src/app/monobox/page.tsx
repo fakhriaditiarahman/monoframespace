@@ -102,7 +102,7 @@ export default function MonoboxPage() {
                   <span className="material-symbols-outlined text-sm">celebration</span>
                   Event Ready
                 </div>
-                <h1 className="text-slate-900 dark:text-white text-5xl font-black leading-[1.1] tracking-tight lg:text-6xl">
+                <h1 className="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-[1.1] tracking-tight lg:text-6xl">
                   Abadikan Momen dengan <span className="text-monobox">Monobox</span>
                 </h1>
                 <p className="text-slate-600 dark:text-pink-200 text-lg font-normal leading-relaxed max-w-lg">
@@ -224,14 +224,14 @@ export default function MonoboxPage() {
           <div className="max-w-[1200px] mx-auto">
             <div className="flex justify-between items-end mb-10">
               <div className="flex flex-col gap-2">
-                <h2 className="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-tight">Acara Terbaru</h2>
+                <h2 className="text-slate-900 dark:text-white text-2xl md:text-3xl font-black leading-tight tracking-tight">Acara Terbaru</h2>
                 <p className="text-slate-600 dark:text-pink-300">Lihat apa yang orang lain ciptakan dengan Monobox.</p>
               </div>
-              <Link className="hidden sm:flex text-monobox font-bold items-center gap-1 hover:gap-2 transition-all" href="#">
+              <Link className="flex text-monobox font-bold items-center gap-1 hover:gap-2 transition-all text-sm md:text-base" href="#">
                 Lihat Galeri Lengkap <span className="material-symbols-outlined text-lg">arrow_forward</span>
               </Link>
             </div>
-            <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
               {galleryImages.map((img, index) => (
                 <div key={index} className="break-inside-avoid rounded-xl overflow-hidden group relative border-4 border-white dark:border-pink-900 shadow-lg shadow-pink-100 dark:shadow-none">
                   <img alt={img.alt} className="w-full object-cover group-hover:scale-105 transition-transform duration-500" src={img.src} />
@@ -275,7 +275,7 @@ export default function MonoboxPage() {
                       required
                     />
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
                       <Input
@@ -298,7 +298,7 @@ export default function MonoboxPage() {
                       />
                     </div>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="package">Pilih Paket</Label>
                       <select

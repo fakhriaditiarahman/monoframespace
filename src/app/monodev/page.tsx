@@ -101,7 +101,7 @@ export default function MonodevPage() {
                   <span className="flex h-2 w-2 rounded-full bg-monodev mr-2 animate-pulse"></span>
                   Monodev IT Solutions
                 </div>
-                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
                   Membangun <span className="text-transparent bg-clip-text bg-gradient-to-r from-monodev to-cyan-500">Tulang Punggung Digital</span> Bisnis Anda
                 </h1>
                 <p className="text-lg leading-8 text-slate-600 dark:text-slate-300 mb-8">
@@ -168,7 +168,7 @@ export default function MonodevPage() {
                 Kami menyediakan layanan pengembangan end-to-end yang dirancang untuk membantu bisnis Anda berkembang secara online.
               </p>
             </div>
-            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none md:grid-cols-3">
               {services.map((service, index) => (
                 <Card key={index} className="flex flex-col rounded-2xl bg-white dark:bg-surface-dark p-8 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 hover:shadow-xl hover:shadow-blue-500/10 hover:ring-monodev/50 transition-all duration-300 group">
                   <CardHeader>
@@ -205,11 +205,11 @@ export default function MonodevPage() {
                   Jelajahi beberapa deployment terbaru kami. Kami membangun antarmuka yang bersih, fungsional, dan berpusat pada pengguna.
                 </p>
               </div>
-              <Link className="hidden md:flex items-center text-cyan-400 font-semibold hover:text-cyan-300 transition-colors" href="#">
+              <Link className="flex items-center text-cyan-400 font-semibold hover:text-cyan-300 transition-colors text-sm md:text-base" href="#">
                 Lihat Semua Proyek <span className="material-symbols-outlined ml-1">arrow_right_alt</span>
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {projects.map((project, index) => (
                 <div key={index} className="group relative bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-monodev/50">
                   <div className="aspect-[16/10] bg-slate-900 overflow-hidden relative">
@@ -277,7 +277,7 @@ export default function MonodevPage() {
                   </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="name">Nama</label>
                       <input
@@ -312,7 +312,7 @@ export default function MonodevPage() {
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="service-type">Jenis Proyek</label>
                       <select
