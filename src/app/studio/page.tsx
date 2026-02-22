@@ -29,6 +29,12 @@ const sessions = [
     description: "Citra komersial berkualitas tinggi untuk meningkatkan kehadiran brand Anda.",
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
   },
+  {
+    title: "Foto Wisuda",
+    category: "Pendidikan",
+    description: "Abadikan momen kelulusan berharga Anda dengan potret wisuda profesional dan estetik.",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600",
+  },
 ]
 
 const studioImages = [
@@ -157,7 +163,7 @@ export default function StudioPage() {
                 <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
               </Link>
             </div>
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {sessions.map((session, index) => (
                 <Card key={index} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-sky-100 transition-all hover:shadow-xl hover:shadow-sky-100 dark:bg-slate-900 dark:ring-slate-800 dark:hover:shadow-none">
                   <div className="aspect-[4/5] overflow-hidden bg-sky-100">
@@ -383,6 +389,7 @@ export default function StudioPage() {
                         <option>Sesi Potret</option>
                         <option>Pemotretan Pasangan</option>
                         <option>Fotografi Produk</option>
+                        <option>Foto Wisuda</option>
                       </select>
                     </div>
                     <div>
