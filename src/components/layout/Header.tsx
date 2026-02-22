@@ -29,21 +29,21 @@ export function Header() {
 
           {/* Brand Logo - Minimal Text */}
           <Link href="/" className="relative z-50 group">
-            <span className="text-xl md:text-2xl font-black tracking-tighter text-white mix-blend-difference hover:text-white/70 transition-colors uppercase">
+            <span className="text-xl md:text-2xl font-black tracking-tighter text-blue-900 hover:text-blue-700 transition-colors uppercase">
               Monoframe
             </span>
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-10 mix-blend-difference">
+          <div className="hidden md:flex items-center gap-10">
             {["Studio", "Monobox", "Monodev"].map((item) => (
               <Link
                 key={item}
                 href={`/${item.toLowerCase()}`}
-                className="text-sm font-bold tracking-widest text-white uppercase relative overflow-hidden group z-50 pointer-events-auto"
+                className="text-sm font-bold tracking-widest text-blue-900 uppercase relative overflow-hidden group z-50 pointer-events-auto"
               >
                 <span className="relative z-10">{item}</span>
-                <span className="absolute left-0 bottom-0 w-full h-[1px] bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute left-0 bottom-0 w-full h-[1px] bg-blue-900 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </div>
@@ -51,12 +51,12 @@ export function Header() {
           {/* Hamburger Menu Toggle (Desktop + Mobile) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all z-50 mix-blend-difference text-white"
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-900/10 backdrop-blur-md border border-blue-900/20 hover:bg-blue-900/20 transition-all z-50 text-blue-950"
           >
             <div className="flex flex-col gap-1.5 items-end justify-center w-5 h-5">
-              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-5 rotate-45 translate-y-2" : "w-5"}`} />
-              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-0 opacity-0" : "w-4"}`} />
-              <span className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "w-5 -rotate-45 -translate-y-2" : "w-3"}`} />
+              <span className={`h-0.5 bg-blue-950 transition-all duration-300 ${mobileMenuOpen ? "w-5 rotate-45 translate-y-2" : "w-5"}`} />
+              <span className={`h-0.5 bg-blue-950 transition-all duration-300 ${mobileMenuOpen ? "w-0 opacity-0" : "w-4"}`} />
+              <span className={`h-0.5 bg-blue-950 transition-all duration-300 ${mobileMenuOpen ? "w-5 -rotate-45 -translate-y-2" : "w-3"}`} />
             </div>
           </button>
         </div>

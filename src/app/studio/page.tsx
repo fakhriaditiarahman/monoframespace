@@ -39,7 +39,7 @@ const studioImages = [
 const packages = [
   {
     name: "The Essential",
-    price: "$199",
+    price: "Rp 3.000.000",
     description: "Cocok untuk pembaruan LinkedIn atau penyegaran cepat.",
     features: [
       "Sesi 45 Menit",
@@ -51,7 +51,7 @@ const packages = [
   },
   {
     name: "The Standard",
-    price: "$349",
+    price: "Rp 5.250.000",
     description: "Ideal untuk portofolio dan pemotretan brand kecil.",
     features: [
       "Sesi 90 Menit",
@@ -64,7 +64,7 @@ const packages = [
   },
   {
     name: "The Creative",
-    price: "$899",
+    price: "Rp 13.500.000",
     description: "Seharian penuh untuk brand dan kampanye.",
     features: [
       "Seharian Penuh (6 Jam)",
@@ -362,9 +362,9 @@ export default function StudioPage() {
                     <div>
                       <Label htmlFor="package">Paket</Label>
                       <select id="package" className="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                        <option>The Essential - $199</option>
-                        <option>The Standard - $349</option>
-                        <option>The Creative - $899</option>
+                        <option>The Essential - Rp 3.000.000</option>
+                        <option>The Standard - Rp 5.250.000</option>
+                        <option>The Creative - Rp 13.500.000</option>
                       </select>
                     </div>
                     <div>

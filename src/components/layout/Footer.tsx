@@ -1,116 +1,51 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 
 export function Footer() {
   return (
-    <footer className="bg-deep-blue text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Column */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded bg-gradient-to-br from-monobox via-monodev to-monostudio text-white">
-                <span className="material-symbols-outlined text-[20px]">grid_view</span>
-              </div>
-              <span className="text-xl font-bold">Monoframe</span>
+    <footer className="relative h-screen bg-transparent pointer-events-none">
+      <div className="fixed bottom-0 left-0 w-full h-screen -z-50 bg-black text-white pointer-events-auto flex flex-col justify-between pt-32 pb-12 px-6 md:px-12 border-t border-white/10">
+
+        {/* Massive CTA */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center">
+          <div className="inline-block px-6 py-3 rounded-full border border-white/20 text-sm font-bold uppercase tracking-widest mb-12">
+            Initiate Project
+          </div>
+          <h2 className="text-[12vw] md:text-[10vw] font-black tracking-tighter uppercase leading-[0.8] mb-12 hover:text-transparent hover:text-stroke-2 transition-all duration-500 cursor-pointer text-white">
+            Let's <br className="md:hidden" />Talk
+          </h2>
+          <a href="mailto:hello@monoframe.studio" className="text-xl md:text-3xl font-bold uppercase tracking-widest text-zinc-500 hover:text-white transition-colors relative group">
+            hello@monoframe.studio
+            <span className="absolute -bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </div>
+
+        {/* Traditional Footer Links */}
+        <div className="w-full max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-end gap-12 text-zinc-500 text-sm font-bold uppercase tracking-widest">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl font-black tracking-tighter text-white uppercase">Monoframe</span>
             </div>
-            <p className="text-sm text-slate-400">
-              Solusi kreatif terpadu. Tempat kreativitas bertemu teknologi.
+            <p className="max-w-xs text-xs leading-relaxed hidden md:block">
+              We blend art and technology to deliver unforgettable digital experiences across web, interactive installations, and visual media.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <span className="material-symbols-outlined">share</span>
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <span className="material-symbols-outlined">chat</span>
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <span className="material-symbols-outlined">mail</span>
-              </a>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-8 md:gap-24">
+            <div className="flex flex-col gap-4">
+              <span className="text-white mb-2">Socials</span>
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <a href="#" className="hover:text-white transition-colors">Twitter / X</a>
+              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
             </div>
-          </div>
-
-          {/* Services Column */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Layanan</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/monobox" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Monobox - Fotobooth
-                </Link>
-              </li>
-              <li>
-                <Link href="/monodev" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Monodev - Pengembangan Web
-                </Link>
-              </li>
-              <li>
-                <Link href="/studio" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Monoframe Studio
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company Column */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Perusahaan</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/#about" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Tentang Kami
-                </Link>
-              </li>
-              <li>
-                <Link href="/#portfolio" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Portofolio
-                </Link>
-              </li>
-              <li>
-                <Link href="/#contact" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Kontak
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/login" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Portal Admin
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Column */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Kontak</h4>
-            <ul className="space-y-3 text-sm text-slate-400">
-              <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">mail</span>
-                hello@monoframe.studio
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">phone</span>
-                +62 812-3456-7890
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">location_on</span>
-                Indonesia
-              </li>
-            </ul>
+            <div className="flex flex-col gap-4">
+              <span className="text-white mb-2">Pillars</span>
+              <Link href="/monobox" className="hover:text-white transition-colors">Monobox</Link>
+              <Link href="/monodev" className="hover:text-white transition-colors">Monodev</Link>
+              <Link href="/studio" className="hover:text-white transition-colors">Studio</Link>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-slate-800">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-slate-400">
-              © {new Date().getFullYear()} Monoframe. Hak cipta dilindungi.
-            </p>
-            <div className="flex gap-6 text-sm text-slate-400">
-              <Link href="#" className="hover:text-white transition-colors">Kebijakan Privasi</Link>
-              <Link href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</Link>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   )

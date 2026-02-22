@@ -338,10 +338,10 @@ export default function MonodevPage() {
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                       >
                         <option value="">Pilih anggaran</option>
-                        <option value="small">Kurang dari $1k</option>
-                        <option value="medium">$1k - $5k</option>
-                        <option value="large">$5k - $10k</option>
-                        <option value="enterprise">$10k+</option>
+                        <option value="small">Kurang dari Rp 15 Juta</option>
+                        <option value="medium">Rp 15 - 75 Juta</option>
+                        <option value="large">Rp 75 - 150 Juta</option>
+                        <option value="enterprise">Lebih dari Rp 150 Juta</option>
                       </select>
                     </div>
                   </div>

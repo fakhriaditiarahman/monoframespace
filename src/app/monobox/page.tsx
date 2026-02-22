@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 const packages = [
   {
     name: "Starter",
-    price: "$350",
+    price: "Rp 5.250.000",
     description: "Cocok untuk acara kecil",
     features: [
       "Digital Saja (Tanpa Cetak)",
@@ -23,7 +23,7 @@ const packages = [
   },
   {
     name: "Classic",
-    price: "$550",
+    price: "Rp 8.250.000",
     description: "Pilihan paling populer kami",
     features: [
       "Cetak 2x6 atau 4x6 Tak Terbatas",
@@ -36,7 +36,7 @@ const packages = [
   },
   {
     name: "Ultimate",
-    price: "$750",
+    price: "Rp 11.250.000",
     description: "Untuk pengalaman lengkap",
     features: [
       "Cetak Tak Terbatas + Salinan",
@@ -309,9 +309,9 @@ export default function MonoboxPage() {
                         required
                       >
                         <option value="">Pilih paket</option>
-                        <option value="starter">Starter - $350</option>
-                        <option value="classic">Classic - $550</option>
-                        <option value="ultimate">Ultimate - $750</option>
+                        <option value="starter">Starter - Rp 5.250.000</option>
+                        <option value="classic">Classic - Rp 8.250.000</option>
+                        <option value="ultimate">Ultimate - Rp 11.250.000</option>
                       </select>
                     </div>
                     <div className="space-y-2">
