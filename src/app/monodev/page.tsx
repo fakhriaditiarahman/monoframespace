@@ -2,11 +2,14 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { animateTextReveal } from "@/lib/animations"
+import { useEffect, useRef } from "react"
 
 const services = [
   {
@@ -53,6 +56,23 @@ const projects = [
   },
 ]
 
+const techStacks = [
+  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+  { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', invertDark: true },
+  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+  { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+  { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
+  { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
+  { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
+  { name: 'Supabase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg' },
+  { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg' },
+  { name: 'C', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg' },
+  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+  { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg' },
+]
+
 export default function MonodevPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -71,6 +91,19 @@ export default function MonodevPage() {
     setTimeout(() => setSubmitted(false), 3000)
   }
 
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "center center"]
+  })
+
+  // Creative Process Simulation: Wireframe/Blur to Final Sharp Color
+  const processFilter = useTransform(scrollYProgress, [0, 1], ["grayscale(100%) blur(10px) contrast(150%)", "grayscale(0%) blur(0px) contrast(100%)"])
+
+  useEffect(() => {
+    animateTextReveal('.monodev-hero-heading', { y: 30, duration: 1.2, delay: 0.5 });
+  }, []);
+
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased">
       {/* Custom Monodev Header */}
@@ -83,6 +116,7 @@ export default function MonodevPage() {
           <nav className="hidden md:flex gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
             <Link href="#services" className="hover:text-monodev transition-colors">Layanan</Link>
             <Link href="#showcase" className="hover:text-monodev transition-colors">Portofolio</Link>
+            <Link href="/monodev/community" className="hover:text-monodev transition-colors">Komunitas</Link>
           </nav>
           <Button asChild size="sm" variant="outline" className="border-monodev text-monodev hover:bg-monodev hover:text-white rounded-md">
             <Link href="#contact">Hubungi Kami</Link>
@@ -94,14 +128,19 @@ export default function MonodevPage() {
         {/* Hero Section */}
         <section className="relative isolate overflow-hidden pt-14 pb-16 sm:pb-20 lg:pb-28 bg-white dark:bg-background-dark">
           <div className="absolute inset-0 -z-10 bg-tech-grid opacity-[0.4] [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            className="mx-auto max-w-7xl px-6 lg:px-8"
+            initial={{ filter: "blur(20px)", y: 20, opacity: 0 }}
+            animate={{ filter: "blur(0px)", y: 0, opacity: 1 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-800 px-3 py-1 text-sm font-medium text-monodev mb-6">
+                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-800 px-3 py-1 text-sm font-medium text-monodev mb-6 cursor-default">
                   <span className="flex h-2 w-2 rounded-full bg-monodev mr-2 animate-pulse"></span>
                   Monodev IT Solutions
                 </div>
-                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
+                <h1 className="monodev-hero-heading text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6 cursor-default">
                   Membangun <span className="text-transparent bg-clip-text bg-gradient-to-r from-monodev to-cyan-500">Tulang Punggung Digital</span> Bisnis Anda
                 </h1>
                 <p className="text-lg leading-8 text-slate-600 dark:text-slate-300 mb-8">
@@ -119,28 +158,26 @@ export default function MonodevPage() {
                   </Link>
                 </div>
                 <div className="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Didukung oleh Tech Stack Modern</p>
-                  <div className="flex gap-6 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
-                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300">
-                      <span className="material-symbols-outlined text-monodev">javascript</span> JS
-                    </div>
-                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300">
-                      <span className="material-symbols-outlined text-orange-500">html</span> HTML5
-                    </div>
-                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300">
-                      <span className="material-symbols-outlined text-blue-500">css</span> CSS3
-                    </div>
-                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300">
-                      <span className="material-symbols-outlined text-cyan-400">code_blocks</span> React
-                    </div>
-                    <div className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300">
-                      <span className="material-symbols-outlined text-indigo-500">database</span> SQL
-                    </div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-6">Didukung oleh Tech Stack Modern</p>
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                    {techStacks.map((tech) => (
+                      <div key={tech.name} className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-monodev/50 hover:shadow-md hover:shadow-monodev/10 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 group cursor-default" data-cursor-text={tech.name}>
+                        <img
+                          src={tech.icon}
+                          alt={tech.name}
+                          className={`h-6 w-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ${tech.invertDark ? 'dark:invert opacity-90 group-hover:opacity-100' : ''}`}
+                        />
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-monodev transition-colors">{tech.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-              <div className="relative lg:h-full">
-                <div className="relative rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 p-3 ring-1 ring-inset ring-white/10 lg:-m-4 lg:rounded-2xl lg:p-4 shadow-2xl shadow-blue-900/20">
+              <div className="relative lg:h-full" ref={containerRef}>
+                <motion.div
+                  className="relative rounded-2xl bg-gradient-to-b from-slate-900 to-slate-800 p-3 ring-1 ring-inset ring-white/10 lg:-m-4 lg:rounded-2xl lg:p-4 shadow-2xl shadow-blue-900/20"
+                  style={{ filter: processFilter }}
+                >
                   <div className="flex items-center gap-2 mb-2 px-2">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -152,10 +189,10 @@ export default function MonodevPage() {
                     className="w-full rounded-lg shadow-inner ring-1 ring-white/5 opacity-90"
                     src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
                   />
-                </div>
+                </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* Services Section */}
@@ -211,9 +248,23 @@ export default function MonodevPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {projects.map((project, index) => (
-                <div key={index} className="group relative bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-monodev/50">
+                <motion.div
+                  key={index}
+                  initial={{ clipPath: "inset(100% 0 0 0)", y: 50, scale: 0.95 }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0)", y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition-all hover:shadow-2xl hover:shadow-blue-500/20 hover:border-monodev/50"
+                  data-cursor-text="VIEW"
+                >
                   <div className="aspect-[16/10] bg-slate-900 overflow-hidden relative">
-                    <img alt={project.title} className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" src={project.image} />
+                    <motion.img
+                      alt={project.title}
+                      className="object-cover w-full h-full"
+                      src={project.image}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.5 }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-20">
                       <span className="text-white font-medium flex items-center gap-2">
                         Lihat Studi Kasus <span className="material-symbols-outlined text-sm">arrow_outward</span>
@@ -228,7 +279,7 @@ export default function MonodevPage() {
                     <h3 className="text-lg font-bold text-white group-hover:text-monodev transition-colors">{project.title}</h3>
                     <p className="text-sm text-slate-400 mt-2">{project.description}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

@@ -93,7 +93,8 @@ function NarrativeScene() {
 const SERVICES = [
   { id: "monobox", name: "Monobox", num: "01", desc: "Fotobooth interaktif yang mengubah acara menjadi kenangan abadi.", image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800" },
   { id: "monodev", name: "Monodev", num: "02", desc: "Web architecture & engineering. Performa tinggi dengan desain menawan.", image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800" },
-  { id: "studio", name: "Studio", num: "03", desc: "Arahan seni, editorial, dan fotografi profesional untuk narasi visual yang kuat.", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800" }
+  { id: "studio", name: "Studio", num: "03", desc: "Arahan seni, editorial, dan fotografi profesional untuk narasi visual yang kuat.", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800" },
+  { id: "monocreative", name: "Monocreative", num: "04", desc: "Social Media Agency | Creative Partner for UMKM & Brand. Storytelling, Visual, Strategy.", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800" }
 ]
 
 function PillarsScene() {
@@ -102,12 +103,12 @@ function PillarsScene() {
     target: targetRef,
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.66%"])
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"])
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-blue-100">
+    <section ref={targetRef} className="relative h-[400vh] bg-blue-100">
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex w-[300vw] h-full items-center">
+        <motion.div style={{ x }} className="flex w-[400vw] h-full items-center">
           {SERVICES.map((srv, i) => (
             <div key={srv.id} className="w-[100vw] flex flex-col md:flex-row items-center justify-center p-6 md:p-24 gap-12 relative">
               {/* Background Number */}

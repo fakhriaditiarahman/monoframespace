@@ -2,10 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { animateTextReveal } from "@/lib/animations"
+import { useEffect } from "react"
 
 const sessions = [
   {
@@ -80,6 +83,10 @@ const packages = [
 export default function StudioPage() {
   const [selectedDate, setSelectedDate] = useState<number | null>(8)
 
+  useEffect(() => {
+    animateTextReveal('.studio-hero-heading', { y: 30, duration: 1.2, delay: 0.5 });
+  }, []);
+
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display antialiased">
       {/* Custom Studio Header */}
@@ -106,13 +113,18 @@ export default function StudioPage() {
             ></div>
             <div className="absolute inset-0 bg-gradient-to-t from-sky-950/80 via-sky-900/40 to-black/30"></div>
           </div>
-          <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8 text-center md:text-left">
+          <motion.div
+            className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8 text-center md:text-left"
+            initial={{ filter: "blur(20px)", scale: 0.95, opacity: 0 }}
+            animate={{ filter: "blur(0px)", scale: 1, opacity: 1 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="max-w-3xl space-y-6">
-              <div className="inline-flex items-center rounded-full border border-sky-300/30 bg-sky-900/30 px-3 py-1 text-sm font-medium text-sky-100 backdrop-blur-sm">
+              <div className="inline-flex items-center rounded-full border border-sky-300/30 bg-sky-900/30 px-3 py-1 text-sm font-medium text-sky-100 backdrop-blur-sm cursor-default">
                 <span className="mr-2 h-2 w-2 rounded-full bg-monostudio animate-pulse"></span>
                 Pemesanan Musim Baru Dibuka
               </div>
-              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl">
+              <h1 className="studio-hero-heading text-3xl md:text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl cursor-default">
                 Menangkap Esensi <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 to-white">Di Setiap Bingkai.</span>
               </h1>
@@ -121,15 +133,15 @@ export default function StudioPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
                 <Button asChild className="h-12 rounded-lg bg-monostudio px-8 text-base font-semibold text-white shadow-lg shadow-sky-500/20 hover:bg-monostudio-dark hover:text-white transition-all hover:shadow-sky-500/40">
-                  <Link href="#book">Pesan Sesi</Link>
+                  <Link href="#book" data-cursor-text="BOOK">Pesan Sesi</Link>
                 </Button>
-                <Button variant="outline" className="group flex h-12 items-center justify-center gap-2 border border-white/20 bg-white/5 px-8 text-base font-medium text-white backdrop-blur-sm hover:bg-white/10 transition-colors">
+                <Button variant="outline" className="group flex h-12 items-center justify-center gap-2 border border-white/20 bg-white/5 px-8 text-base font-medium text-white backdrop-blur-sm hover:bg-white/10 transition-colors" data-cursor-text="PLAY">
                   <span className="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">play_circle</span>
                   Tonton Showreel
                 </Button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* Sessions Section */}
@@ -179,19 +191,33 @@ export default function StudioPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:h-[500px] auto-rows-[200px]">
               {studioImages.map((img, index) => (
-                <div key={index} className={`relative overflow-hidden rounded-xl bg-sky-50 ${img.span ? img.span : 'md:col-span-1 md:row-span-1'}`}>
-                  <img alt={img.alt} className="h-full w-full object-cover" src={img.src} />
+                <motion.div
+                  key={index}
+                  initial={{ clipPath: "inset(100% 0 0 0)", scale: 0.95 }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className={`relative overflow-hidden rounded-xl bg-sky-50 cursor-pointer ${img.span ? img.span : 'md:col-span-1 md:row-span-1'}`}
+                  data-cursor-text={img.label === 'Lihat Galeri' ? 'GALLERY' : 'VIEW'}
+                >
+                  <motion.img
+                    alt={img.alt}
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                    src={img.src}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
+                  />
                   {img.label && (
                     <div className={`absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded text-xs font-semibold text-slate-900 backdrop-blur-sm ${img.label === 'Lihat Galeri' ? 'bg-sky-950 text-white' : ''}`}>
                       {img.label}
                     </div>
                   )}
                   {img.label === 'Lihat Galeri' && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-sky-950/50">
-                      <span className="text-white font-medium border-b border-sky-300 pb-0.5 cursor-pointer hover:border-sky-200">Lihat Galeri</span>
+                    <div className="absolute inset-0 flex items-center justify-center bg-sky-950/50 hover:bg-sky-950/30 transition-colors duration-300">
+                      <span className="text-white font-medium border-b border-sky-300 pb-0.5 cursor-pointer hover:border-sky-200">Lihat Galeri Lengkap</span>
                     </div>
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

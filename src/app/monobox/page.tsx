@@ -2,11 +2,15 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { animateTextReveal, microInteractionVariants } from "@/lib/animations"
+import { useEffect } from "react"
+
 
 const packages = [
   {
@@ -76,6 +80,10 @@ export default function MonoboxPage() {
     setTimeout(() => setSubmitted(false), 3000)
   }
 
+  useEffect(() => {
+    animateTextReveal('.monobox-hero-heading', { y: 30, duration: 1.2, delay: 0.5 });
+  }, []);
+
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark">
       {/* Custom Monobox Header */}
@@ -95,14 +103,19 @@ export default function MonoboxPage() {
       {/* Hero Section */}
       <main className="flex-grow">
         <section className="px-6 py-12 lg:px-40 lg:py-20 flex flex-col items-center">
-          <div className="layout-content-container flex flex-col max-w-[1200px] w-full">
+          <motion.div
+            className="layout-content-container flex flex-col max-w-[1200px] w-full"
+            initial={{ filter: "blur(20px)", scale: 0.95, opacity: 0 }}
+            animate={{ filter: "blur(0px)", scale: 1, opacity: 1 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="flex flex-col gap-10 px-0 lg:flex-row items-center">
               <div className="flex flex-col gap-6 lg:w-1/2 items-start">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-900/30 text-monobox text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-900/30 text-monobox text-xs font-bold uppercase tracking-wider cursor-default">
                   <span className="material-symbols-outlined text-sm">celebration</span>
                   Event Ready
                 </div>
-                <h1 className="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-[1.1] tracking-tight lg:text-6xl">
+                <h1 className="monobox-hero-heading text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-[1.1] tracking-tight lg:text-6xl cursor-default">
                   Abadikan Momen dengan <span className="text-monobox">Monobox</span>
                 </h1>
                 <p className="text-slate-600 dark:text-pink-200 text-lg font-normal leading-relaxed max-w-lg">
@@ -110,10 +123,10 @@ export default function MonoboxPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
                   <Button asChild className="rounded-xl h-12 px-8 bg-monobox hover:bg-monobox-dark transition-all shadow-xl shadow-monobox/30 transform hover:-translate-y-1">
-                    <Link href="#booking">Cek Ketersediaan</Link>
+                    <Link href="#booking" data-cursor-text="BOOK">Cek Ketersediaan</Link>
                   </Button>
                   <Button asChild variant="outline" className="rounded-xl h-12 px-8 border-pink-200 dark:border-pink-800 hover:border-monobox/50">
-                    <Link href="#packages">Lihat Paket</Link>
+                    <Link href="#packages" data-cursor-text="VIEW">Lihat Paket</Link>
                   </Button>
                 </div>
                 <div className="flex items-center gap-4 mt-4 text-sm text-slate-500 dark:text-pink-400">
@@ -131,18 +144,21 @@ export default function MonoboxPage() {
                 </div>
               </div>
 
-              <div className="w-full lg:w-1/2 relative h-[400px] lg:h-[500px]">
+              <div className="w-full lg:w-1/2 relative h-[400px] lg:h-[500px]" data-cursor-text="PHOTOBOOTH">
                 <div className="absolute inset-0 bg-gradient-to-tr from-pink-100 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-2xl -rotate-2 transform scale-95 z-0"></div>
                 <div className="absolute inset-0 flex gap-4 overflow-hidden rounded-2xl z-10 border-4 border-white dark:border-pink-900/50 shadow-2xl shadow-pink-200 dark:shadow-none">
-                  <div className="flex-1 h-full bg-cover bg-center rounded-l-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=600')" }}></div>
+                  <motion.div
+                    initial={{ scale: 1.2 }} animate={{ scale: 1 }} transition={{ duration: 2, ease: "easeOut" }}
+                    className="flex-1 h-full bg-cover bg-center rounded-l-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=600')" }}>
+                  </motion.div>
                   <div className="flex-1 h-full flex flex-col gap-4">
-                    <div className="flex-1 bg-cover bg-center rounded-tr-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600')" }}></div>
-                    <div className="flex-1 bg-cover bg-center rounded-br-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511578314322-379afb476865?w=600')" }}></div>
+                    <motion.div initial={{ scale: 1.2 }} animate={{ scale: 1 }} transition={{ duration: 2, delay: 0.2, ease: "easeOut" }} className="flex-1 bg-cover bg-center rounded-tr-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600')" }}></motion.div>
+                    <motion.div initial={{ scale: 1.2 }} animate={{ scale: 1 }} transition={{ duration: 2, delay: 0.4, ease: "easeOut" }} className="flex-1 bg-cover bg-center rounded-br-sm" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511578314322-379afb476865?w=600')" }}></motion.div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* Features Section */}
@@ -233,12 +249,26 @@ export default function MonoboxPage() {
             </div>
             <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
               {galleryImages.map((img, index) => (
-                <div key={index} className="break-inside-avoid rounded-xl overflow-hidden group relative border-4 border-white dark:border-pink-900 shadow-lg shadow-pink-100 dark:shadow-none">
-                  <img alt={img.alt} className="w-full object-cover group-hover:scale-105 transition-transform duration-500" src={img.src} />
+                <motion.div
+                  key={index}
+                  initial={{ clipPath: "inset(100% 0 0 0)", y: 50, scale: 0.95 }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0)", y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="break-inside-avoid rounded-xl overflow-hidden group relative border-4 border-white dark:border-pink-900 shadow-lg shadow-pink-100 dark:shadow-none"
+                  data-cursor-text="VIEW"
+                >
+                  <motion.img
+                    alt={img.alt}
+                    className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    src={img.src}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-monobox/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <p className="text-white font-medium">{img.alt}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

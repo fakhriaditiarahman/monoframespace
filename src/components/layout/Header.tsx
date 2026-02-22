@@ -36,7 +36,7 @@ export function Header() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-10">
-            {["Studio", "Monobox", "Monodev"].map((item) => (
+            {["Studio", "Monobox", "Monodev", "Monocreative"].map((item) => (
               <Link
                 key={item}
                 href={`/${item.toLowerCase()}`}
@@ -79,6 +79,7 @@ export function Header() {
                 { label: "Monoframe Studio", href: "/studio" },
                 { label: "Monobox", href: "/monobox" },
                 { label: "Monodev", href: "/monodev" },
+                { label: "Monocreative", href: "/monocreative" },
                 { label: "Contact", href: "/#contact" },
               ].map((link, i) => (
                 <motion.div
