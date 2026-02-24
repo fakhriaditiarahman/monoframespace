@@ -5,78 +5,13 @@ import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { animateTextReveal } from "@/lib/animations"
 import { useEffect, useRef } from "react"
-
-const services = [
-  {
-    icon: "storefront",
-    title: "Website UMKM",
-    description: "Website terjangkau, cepat, dan responsif untuk membantu usaha kecil go digital. Termasuk SEO dasar dan integrasi Google Maps.",
-    features: ["Responsif Mobile", "Integrasi WhatsApp", "Pengerjaan Cepat (3-5 hari)"],
-  },
-  {
-    icon: "rocket_launch",
-    title: "Landing Page Konversi Tinggi",
-    description: "Halaman yang dioptimalkan untuk kampanye pemasaran. Fokus pada kecepatan, integrasi analitik, dan Call-to-Action yang jelas untuk ROI maksimal.",
-    features: ["Siap A/B Testing", "Dashboard Analitik", "Implementasi Pixel"],
-  },
-  {
-    icon: "school",
-    title: "Dukungan IT Akademik",
-    description: "Dukungan khusus untuk portal penelitian, proyek tesis, sistem survei, dan perangkat pendidikan. Penanganan data aman sesuai standar akademik.",
-    features: ["Visualisasi Data Kustom", "Sistem Survei", "Panel Admin Aman"],
-  },
-]
-
-const projects = [
-  {
-    title: "FinTrack Analytics",
-    category: "Platform SaaS",
-    description: "Dashboard pelacakan keuangan yang komprehensif untuk usaha kecil.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
-    year: "2023",
-  },
-  {
-    title: "Lumina Fashion",
-    category: "E-Commerce",
-    description: "Toko online modern dengan integrasi gateway pembayaran.",
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600",
-    year: "2023",
-  },
-  {
-    title: "EduData Research",
-    category: "Akademik",
-    description: "Portal pengumpulan data aman untuk kelompok penelitian universitas.",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600",
-    year: "2023",
-  },
-]
-
-const techStacks = [
-  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-  { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', invertDark: true },
-  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
-  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
-  { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
-  { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
-  { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
-  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
-  { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
-  { name: 'Supabase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg' },
-  { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg' },
-  { name: 'C', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg' },
-  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
-  { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg' },
-]
 
 export default function MonodevPage() {
   const [formData, setFormData] = useState({
     name: "",
-    company: "",
+    category: "",
     email: "",
     serviceType: "",
     budget: "",
@@ -114,9 +49,10 @@ export default function MonodevPage() {
             <span className="font-extrabold tracking-tight text-xl dark:text-white group-hover:text-monodev transition-colors">MONODEV</span>
           </Link>
           <nav className="hidden md:flex gap-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
-            <Link href="#services" className="hover:text-monodev transition-colors">Layanan</Link>
+            <Link href="#umkm" className="hover:text-monodev transition-colors">UMKM</Link>
+            <Link href="#company" className="hover:text-monodev transition-colors">Perusahaan</Link>
+            <Link href="#student" className="hover:text-monodev transition-colors">Mahasiswa</Link>
             <Link href="#showcase" className="hover:text-monodev transition-colors">Portofolio</Link>
-            <Link href="/monodev/community" className="hover:text-monodev transition-colors">Komunitas</Link>
           </nav>
           <Button asChild size="sm" variant="outline" className="border-monodev text-monodev hover:bg-monodev hover:text-white rounded-md">
             <Link href="#contact">Hubungi Kami</Link>
@@ -141,36 +77,21 @@ export default function MonodevPage() {
                   Monodev IT Solutions
                 </div>
                 <h1 className="monodev-hero-heading text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6 cursor-default">
-                  Membangun <span className="text-transparent bg-clip-text bg-gradient-to-r from-monodev to-cyan-500">Tulang Punggung Digital</span> Bisnis Anda
+                  Membangun <span className="text-transparent bg-clip-text bg-gradient-to-r from-monodev to-cyan-500">Masa Depan Digital</span>
                 </h1>
                 <p className="text-lg leading-8 text-slate-600 dark:text-slate-300 mb-8">
-                  Solusi pengembangan web kustom untuk UMKM, startup, dan institusi akademik. Teknologi yang andal, skalabel, dan aman disesuaikan untuk pertumbuhan Anda.
+                  Solusi teknologi komprehensif untuk setiap tahap pertumbuhan. Dari UMKM yang ingin go digital, perusahaan yang membutuhkan branding kuat, hingga mahasiswa yang mengejar keunggulan akademik.
                 </p>
                 <div className="flex items-center gap-x-6">
                   <Button asChild className="bg-monodev hover:bg-monodev-dark shadow-lg shadow-monodev/30">
-                    <Link href="#showcase">
-                      Lihat Portofolio
+                    <Link href="#contact">
+                      Mulai Proyek
                       <span className="material-symbols-outlined text-sm ml-1">rocket_launch</span>
                     </Link>
                   </Button>
-                  <Link className="text-sm font-semibold leading-6 text-slate-900 dark:text-white flex items-center gap-1 hover:text-monodev transition-colors" href="#services">
-                    Layanan Kami <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  <Link className="text-sm font-semibold leading-6 text-slate-900 dark:text-white flex items-center gap-1 hover:text-monodev transition-colors" href="#umkm">
+                    Jelajahi Solusi <span className="material-symbols-outlined text-sm">arrow_downward</span>
                   </Link>
-                </div>
-                <div className="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-6">Didukung oleh Tech Stack Modern</p>
-                  <div className="flex flex-wrap gap-3 sm:gap-4">
-                    {techStacks.map((tech) => (
-                      <div key={tech.name} className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-monodev/50 hover:shadow-md hover:shadow-monodev/10 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 group cursor-default" data-cursor-text={tech.name}>
-                        <img
-                          src={tech.icon}
-                          alt={tech.name}
-                          className={`h-6 w-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ${tech.invertDark ? 'dark:invert opacity-90 group-hover:opacity-100' : ''}`}
-                        />
-                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-monodev transition-colors">{tech.name}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
               <div className="relative lg:h-full" ref={containerRef}>
@@ -182,7 +103,7 @@ export default function MonodevPage() {
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    <div className="ml-2 bg-slate-800 rounded px-2 py-0.5 text-xs text-slate-400 font-mono">index.tsx</div>
+                    <div className="ml-2 bg-slate-800 rounded px-2 py-0.5 text-xs text-slate-400 font-mono">dev_mode.tsx</div>
                   </div>
                   <img
                     alt="Developer coding on laptop"
@@ -195,108 +116,192 @@ export default function MonodevPage() {
           </motion.div>
         </section>
 
-        {/* Services Section */}
-        <section className="py-24 bg-slate-50 dark:bg-slate-900/50" id="services">
+        {/* UMKM Section */}
+        <section id="umkm" className="py-24 bg-slate-50 dark:bg-slate-900/50">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center mb-16">
-              <h2 className="text-base font-semibold leading-7 text-monodev">Keahlian Kami</h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Solusi Web yang Disesuaikan</p>
+              <h2 className="text-base font-semibold leading-7 text-monodev">UMKM Go Digital</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Solusi Bisnis Kecil & Menengah</p>
               <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
-                Kami menyediakan layanan pengembangan end-to-end yang dirancang untuk membantu bisnis Anda berkembang secara online.
+                Tingkatkan efisiensi dan jangkauan pasar Anda dengan teknologi yang terjangkau dan mudah digunakan.
               </p>
             </div>
-            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none md:grid-cols-3">
-              {services.map((service, index) => (
-                <Card key={index} className="flex flex-col rounded-2xl bg-white dark:bg-surface-dark p-8 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 hover:shadow-xl hover:shadow-blue-500/10 hover:ring-monodev/50 transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-900/20 text-monodev group-hover:bg-monodev group-hover:text-white transition-colors">
-                      <span className="material-symbols-outlined text-3xl">{service.icon}</span>
-                    </div>
-                    <CardTitle className="text-xl group-hover:text-monodev transition-colors">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex-auto">
-                    <p className="text-base leading-7 text-slate-600 dark:text-slate-400 mb-6">{service.description}</p>
-                    <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                      {service.features.map((feature, i) => (
-                        <li key={i} className="flex items-center gap-3">
-                          <span className="material-symbols-outlined text-monodev text-lg">check_circle</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="hover:border-monodev transition-colors group">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-monodev mb-4 group-hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-2xl">storefront</span>
+                  </div>
+                  <CardTitle>Landing Page Usaha</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-600 dark:text-slate-400 mb-4">Halaman web satu muka yang dirancang khusus untuk mempromosikan produk atau jasa Anda dengan konversi tinggi.</p>
+                  <ul className="text-sm space-y-2 text-slate-500">
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> SEO Friendly</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Integrasi WhatsApp</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Hosting Gratis 1 Tahun</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="hover:border-monodev transition-colors group">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-monodev mb-4 group-hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-2xl">point_of_sale</span>
+                  </div>
+                  <CardTitle>Aplikasi Kasir (POS)</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-600 dark:text-slate-400 mb-4">Sistem kasir digital untuk mencatat transaksi penjualan harian dengan mudah dan akurat.</p>
+                  <ul className="text-sm space-y-2 text-slate-500">
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Laporan Penjualan Harian</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Cetak Struk Bluetooth</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Manajemen Pelanggan</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="hover:border-monodev transition-colors group">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-monodev mb-4 group-hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-2xl">inventory_2</span>
+                  </div>
+                  <CardTitle>Manajemen Stok</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-600 dark:text-slate-400 mb-4">Pantau persediaan barang secara real-time untuk mencegah kehabisan stok atau penumpukan barang.</p>
+                  <ul className="text-sm space-y-2 text-slate-500">
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Notifikasi Stok Menipis</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Opname Stok Mudah</li>
+                    <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Analisa Barang Terlaris</li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Portfolio Section */}
-        <section className="py-24 relative overflow-hidden bg-slate-900" id="showcase">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900 to-slate-900"></div>
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
-            <div className="mx-auto max-w-2xl lg:max-w-none mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        {/* Company Section */}
+        <section id="company" className="py-24 bg-white dark:bg-background-dark">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Showcase Proyek</h2>
-                <p className="mt-4 text-lg text-slate-300 max-w-xl">
-                  Jelajahi beberapa deployment terbaru kami. Kami membangun antarmuka yang bersih, fungsional, dan berpusat pada pengguna.
+                <h2 className="text-base font-semibold leading-7 text-monodev">Korporat & Profesional</h2>
+                <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Company Profile Profesional</p>
+                <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
+                  Representasi digital terbaik untuk perusahaan Anda. Bangun kredibilitas dan kepercayaan klien dengan website profil perusahaan yang elegan, informatif, dan profesional.
                 </p>
+                <div className="mt-8 space-y-4">
+                  <div className="flex gap-4">
+                    <div className="flex-none text-monodev">
+                      <span className="material-symbols-outlined">verified</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-white">Desain Premium & Eksklusif</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Bukan template pasaran. Desain disesuaikan dengan identitas brand perusahaan Anda.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-none text-monodev">
+                      <span className="material-symbols-outlined">security</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-white">Keamanan & Performa Tinggi</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Hosting aman, SSL certificate, dan optimasi kecepatan akses.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-none text-monodev">
+                      <span className="material-symbols-outlined">language</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-900 dark:text-white">Multi-Bahasa</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Siap untuk pasar global dengan dukungan fitur multi-bahasa (Indonesia/Inggris).</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <Link className="flex items-center text-cyan-400 font-semibold hover:text-cyan-300 transition-colors text-sm md:text-base" href="#">
-                Lihat Semua Proyek <span className="material-symbols-outlined ml-1">arrow_right_alt</span>
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ clipPath: "inset(100% 0 0 0)", y: 50, scale: 0.95 }}
-                  whileInView={{ clipPath: "inset(0% 0 0 0)", y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition-all hover:shadow-2xl hover:shadow-blue-500/20 hover:border-monodev/50"
-                  data-cursor-text="VIEW"
-                >
-                  <div className="aspect-[16/10] bg-slate-900 overflow-hidden relative">
-                    <motion.img
-                      alt={project.title}
-                      className="object-cover w-full h-full"
-                      src={project.image}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-20">
-                      <span className="text-white font-medium flex items-center gap-2">
-                        Lihat Studi Kasus <span className="material-symbols-outlined text-sm">arrow_outward</span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold text-cyan-300 bg-cyan-950/50 border border-cyan-800 px-2 py-1 rounded">{project.category}</span>
-                      <span className="text-xs text-slate-400">{project.year}</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-monodev transition-colors">{project.title}</h3>
-                    <p className="text-sm text-slate-400 mt-2">{project.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-20 blur-xl"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800"
+                  alt="Modern Office"
+                  className="relative rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section className="py-24 bg-gradient-to-br from-blue-900 via-slate-900 to-black text-white relative isolate overflow-hidden" id="contact">
+        {/* Student Section - Creative/Edgy */}
+        <section id="student" className="py-24 bg-slate-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-monodev/10 to-transparent"></div>
+
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-base font-bold uppercase tracking-widest text-cyan-400">Zona Mahasiswa</h2>
+              <p className="mt-2 text-4xl font-black tracking-tighter text-white sm:text-5xl font-mono">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">ACADEMIC BOOSTER</span>
+              </p>
+              <p className="mt-4 text-xl text-slate-400 max-w-2xl mx-auto">
+                Deadline menghantui? Bug tidak kunjung hilang? Kami adalah cheat code untuk sukses akademikmu.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-slate-800/50 backdrop-blur border border-slate-700 p-8 rounded-xl hover:border-cyan-500/50 transition-all hover:-translate-y-2 group">
+                <div className="text-cyan-400 mb-6 group-hover:animate-pulse">
+                  <span className="material-symbols-outlined text-4xl">code</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 font-mono">Weekly Task Partner</h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Bantuan coding tugas mingguan. Dari algoritma dasar C++, Java OOP, hingga Web Development. Penjelasan kode disertakan agar kamu tetap paham.
+                </p>
+                <span className="text-xs font-mono text-cyan-500 bg-cyan-950/30 px-2 py-1 rounded">#AntiPlagiat</span>
+              </div>
+
+              <div className="bg-slate-800/50 backdrop-blur border border-slate-700 p-8 rounded-xl hover:border-purple-500/50 transition-all hover:-translate-y-2 group">
+                <div className="text-purple-400 mb-6 group-hover:animate-pulse">
+                  <span className="material-symbols-outlined text-4xl">school</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 font-mono">Final Project Accelerator</h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Tugas Akhir Informatika, Sistem Informasi, atau Teknik Komputer? Kami bantu rancang sistem, database, hingga implementasi aplikasi fullstack.
+                </p>
+                <span className="text-xs font-mono text-purple-500 bg-purple-950/30 px-2 py-1 rounded">#SkripsiKeluar</span>
+              </div>
+
+              <div className="bg-slate-800/50 backdrop-blur border border-slate-700 p-8 rounded-xl hover:border-pink-500/50 transition-all hover:-translate-y-2 group">
+                <div className="text-pink-400 mb-6 group-hover:animate-pulse">
+                  <span className="material-symbols-outlined text-4xl">lightbulb</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 font-mono">Creative Tech Solution</h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Butuh ide liar untuk PKM atau kompetisi IT? Kami bantu brainstorming ide, prototyping, hingga pembuatan MVP yang memukau juri.
+                </p>
+                <span className="text-xs font-mono text-pink-500 bg-pink-950/30 px-2 py-1 rounded">#JuaraKompetisi</span>
+              </div>
+            </div>
+
+            <div className="mt-12 text-center">
+              <p className="text-slate-500 text-sm italic mb-4">*Privasi & Kerahasiaan dijamin 100%. IP aman, Kode unik.*</p>
+              <Button asChild variant="outline" className="border-cyan-500 text-cyan-400 hover:bg-cyan-950 hover:text-cyan-300 font-mono">
+                <Link href="#contact">Konsultasi Tugas Sekarang_</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section id="contact" className="py-24 bg-gradient-to-br from-blue-900 via-slate-900 to-black text-white relative isolate overflow-hidden">
           <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-monodev/20 rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[40rem] h-[40rem] bg-cyan-500/10 rounded-full blur-[100px]"></div>
           <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <div className="flex flex-col justify-center">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6">
-                  Siap memulai <span className="text-monodev">perjalanan digital</span> Anda?
+                  Siap memulai <span className="text-monodev">proyek</span> Anda?
                 </h2>
                 <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-                  Apakah Anda membutuhkan landing page sederhana atau aplikasi web kompleks, tim kami siap membantu. Isi formulir, dan kami akan menghubungi Anda dengan konsultasi dan penawaran gratis.
+                  Pilih kategori Anda dan ceritakan kebutuhan Anda. Tim kami akan segera merespons dengan solusi terbaik.
                 </p>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
@@ -313,103 +318,75 @@ export default function MonodevPage() {
                       <span className="material-symbols-outlined">chat</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white text-lg">Obrolan Langsung</h3>
-                      <p className="text-slate-400">Tersedia Senin-Jumat, 09.00 - 17.00</p>
+                      <h3 className="font-semibold text-white text-lg">WhatsApp Support</h3>
+                      <p className="text-slate-400">Respon Cepat 09.00 - 21.00</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 backdrop-blur-lg border border-white/10 text-white rounded-2xl p-8 shadow-2xl">
-                <h3 className="text-2xl font-bold mb-6">Minta Penawaran</h3>
+                <h3 className="text-2xl font-bold mb-6">Formulir Kontak</h3>
                 {submitted && (
                   <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
-                    ✓ Permintaan terkirim! Kami akan menghubungi Anda segera.
+                    ✓ Pesan terkirim! Kami akan segera menghubungi Anda.
                   </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="name">Nama</label>
+                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="name">Nama / Instansi</label>
                       <input
                         className="mt-1 block w-full rounded-md border-0 px-3 py-2 text-white shadow-sm ring-1 ring-inset ring-white/20 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
                         id="name"
-                        placeholder="Nama Anda"
+                        placeholder="Nama Lengkap"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="company">Perusahaan</label>
-                      <input
-                        className="mt-1 block w-full rounded-md border-0 px-3 py-2 text-white shadow-sm ring-1 ring-inset ring-white/20 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
-                        id="company"
-                        placeholder="Nama perusahaan"
-                        value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      />
+                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="category">Kategori</label>
+                      <select
+                        className="mt-1 block w-full rounded-md border-0 py-2 pl-3 pr-10 text-white ring-1 ring-inset ring-white/20 focus:ring-2 focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
+                        id="category"
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        required
+                      >
+                        <option value="">Pilih Kategori</option>
+                        <option value="umkm">UMKM</option>
+                        <option value="company">Perusahaan</option>
+                        <option value="student">Mahasiswa</option>
+                      </select>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="email">Email</label>
+                    <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="email">Email / WhatsApp</label>
                     <input
                       className="mt-1 block w-full rounded-md border-0 px-3 py-2 text-white shadow-sm ring-1 ring-inset ring-white/20 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
                       id="email"
-                      type="email"
-                      placeholder="you@example.com"
+                      type="text"
+                      placeholder="Email atau No. WA aktif"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="service-type">Jenis Proyek</label>
-                      <select
-                        className="mt-1 block w-full rounded-md border-0 py-2 pl-3 pr-10 text-white ring-1 ring-inset ring-white/20 focus:ring-2 focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
-                        id="service-type"
-                        value={formData.serviceType}
-                        onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-                        required
-                      >
-                        <option value="">Pilih jenis</option>
-                        <option value="umkm">Website UMKM</option>
-                        <option value="landing">Landing Page</option>
-                        <option value="academic">Sistem Akademik</option>
-                        <option value="custom">Pengembangan Kustom</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="budget">Kisaran Anggaran</label>
-                      <select
-                        className="mt-1 block w-full rounded-md border-0 py-2 pl-3 pr-10 text-white ring-1 ring-inset ring-white/20 focus:ring-2 focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
-                        id="budget"
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      >
-                        <option value="">Pilih anggaran</option>
-                        <option value="small">Kurang dari Rp 15 Juta</option>
-                        <option value="medium">Rp 15 - 75 Juta</option>
-                        <option value="large">Rp 75 - 150 Juta</option>
-                        <option value="enterprise">Lebih dari Rp 150 Juta</option>
-                      </select>
-                    </div>
-                  </div>
                   <div>
-                    <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="message">Detail Proyek</label>
+                    <label className="block text-sm font-medium leading-6 text-slate-300" htmlFor="message">Ceritakan Kebutuhan Anda</label>
                     <textarea
                       className="mt-1 block w-full rounded-md border-0 px-3 py-2 text-white shadow-sm ring-1 ring-inset ring-white/20 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-monodev sm:text-sm sm:leading-6 bg-slate-800/50"
                       id="message"
                       rows={4}
-                      placeholder="Ceritakan tentang proyek Anda..."
+                      placeholder="Detail proyek, deadline, atau fitur yang diinginkan..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-monodev hover:bg-monodev-dark shadow-lg shadow-monodev/30">
-                    Kirim Permintaan
+                  <Button type="submit" className="w-full bg-monodev hover:bg-monodev-dark shadow-lg shadow-monodev/30 transition-all">
+                    Kirim Pesan
                   </Button>
                 </form>
               </div>
