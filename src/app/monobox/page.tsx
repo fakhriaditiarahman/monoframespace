@@ -57,7 +57,7 @@ const galleryImages = [
   { alt: "Pesta resepsi pernikahan", src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600" },
   { alt: "Pesta neon acara perusahaan", src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600" },
   { alt: "Teman-teman berpose dengan kacamata", src: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=600" },
-  { alt: "Strip fotobooth hitam putih", src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600" },
+  { alt: "Strip photobooth hitam putih", src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600" },
   { alt: "Foto grup seru dengan props", src: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600" },
   { alt: "Foto acara formal elegan", src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600" },
 ]
@@ -119,7 +119,7 @@ export default function MonoboxPage() {
                   Abadikan Momen dengan <span className="text-monobox">Monobox</span>
                 </h1>
                 <p className="text-slate-600 dark:text-pink-200 text-lg font-normal leading-relaxed max-w-lg">
-                  Pengalaman fotobooth premium untuk acara perusahaan & pribadi. Tingkatkan aktivasi brand atau pernikahan Anda dengan cetakan berkualitas tinggi dan berbagi digital instan.
+                  Pengalaman Photobooth premium untuk acara perusahaan & pribadi. Tingkatkan aktivasi brand atau pernikahan Anda dengan cetakan berkualitas tinggi dan berbagi digital instan.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-2">
                   <Button asChild className="rounded-xl h-12 px-8 bg-monobox hover:bg-monobox-dark transition-all shadow-xl shadow-monobox/30 transform hover:-translate-y-1">
