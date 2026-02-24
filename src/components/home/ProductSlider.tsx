@@ -2,6 +2,7 @@
 
 import { Navigation, Pagination, A11y } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
+import Image from "next/image"
 
 // Import Swiper styles
 import "swiper/css"
@@ -42,11 +43,16 @@ export function ProductSlider() {
         {PRODUCTS.map((product) => (
           <SwiperSlide key={product.id}>
             <div className="relative w-full h-[50vh] md:h-[60vh] px-16 md:px-20 flex items-center justify-center bg-transparent">
-              <img
-                src={product.image}
-                alt={product.id}
-                className="w-full max-w-6xl h-full object-cover rounded-2xl shadow-2xl bg-transparent"
-              />
+              {/* OPTIMIZATION: Replaced standard <img> with Next.js <Image> component for automatic optimization (lazy loading, resizing, format conversion). */}
+              <div className="relative w-full max-w-6xl h-full rounded-2xl shadow-2xl overflow-hidden">
+                <Image
+                  src={product.image}
+                  alt={product.id}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </SwiperSlide>
         ))}
