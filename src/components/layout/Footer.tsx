@@ -3,17 +3,17 @@ import Link from "next/link"
 export function Footer() {
   return (
     <footer className="relative h-screen bg-transparent pointer-events-none">
-      <div className="fixed bottom-0 left-0 w-full h-screen -z-50 bg-black text-white pointer-events-auto flex flex-col justify-between pt-32 pb-12 px-6 md:px-12 border-t border-white/10">
+      <div className="fixed bottom-0 left-0 w-full h-screen -z-50 bg-[#0a0f1d] text-cyan-50 pointer-events-auto flex flex-col justify-between pt-32 pb-12 px-6 md:px-12 border-t border-blue-900/30">
 
         {/* Massive CTA */}
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          <div className="inline-block px-6 py-3 rounded-full border border-white/20 text-sm font-bold uppercase tracking-widest mb-12">
+          <div className="inline-block px-6 py-3 rounded-full border border-cyan-800/50 text-cyan-400 text-sm font-bold uppercase tracking-widest mb-12 shadow-[0_0_15px_rgba(34,211,238,0.1)]">
             Initiate Project
           </div>
-          <h2 className="text-[12vw] md:text-[10vw] font-black tracking-tighter uppercase leading-[0.8] mb-12 hover:text-transparent hover:text-stroke-2 transition-all duration-500 cursor-pointer text-white">
+          <h2 className="text-[12vw] md:text-[10vw] font-black tracking-tighter uppercase leading-[0.8] mb-12 hover:text-transparent hover:text-stroke-2-blue transition-all duration-500 cursor-pointer text-white">
             Let's <br className="md:hidden" />Talk
           </h2>
-          <a href="mailto:hello@monoframe.studio" className="text-xl md:text-3xl font-bold uppercase tracking-widest text-zinc-500 hover:text-white transition-colors relative group">
+          <a href="mailto:hello@monoframe.studio" className="text-xl md:text-3xl font-bold uppercase tracking-widest text-blue-400/80 hover:text-cyan-300 transition-colors relative group">
             hello@monoframe.studio
             <span className="absolute -bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
           </a>

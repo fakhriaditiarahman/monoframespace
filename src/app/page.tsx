@@ -160,7 +160,7 @@ function ArchiveScene() {
     <section className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
         <h2 className="text-5xl md:text-[10vw] font-black tracking-tighter uppercase leading-[0.8] mb-24 md:mb-48 text-center md:text-left text-blue-950">
-          The <br /> <span className="text-transparent text-stroke-2-blue">Archive</span>
+          Galeri <br /> <span className="text-transparent text-stroke-2-blue">Produk</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32">
@@ -207,6 +207,204 @@ function PortfolioCard({ item, index }: { item: any, index: number }) {
   )
 }
 
+// ==== NEW SECTIONS ====
+
+// ---- SCENE 5: NEWS (BERITA) ----
+const NEWS_DUMMY = [
+  { date: "24 Feb 2026", title: "Peluncuran Fitur Pemesanan Interaktif", category: "Pembaruan" },
+  { date: "10 Feb 2026", title: "Kolaborasi Monoframe dengan Brand Lokal XYZ", category: "Kerjasama" },
+  { date: "01 Jan 2026", title: "Membuka Tahun Baru dengan Kamera Baru di Studio", category: "Studio" },
+]
+
+function NewsScene() {
+  return (
+    <section className="py-24 md:py-32 bg-white relative z-20">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase text-blue-950">
+            Berita <br /><span className="text-transparent text-stroke-2-blue">Terbaru</span>
+          </h2>
+          <button className="text-blue-900 font-bold uppercase tracking-widest text-sm hover:text-blue-600 transition-colors border-b-2 border-blue-900 pb-1">
+            Lihat Semua Berita
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {NEWS_DUMMY.map((news, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.1 }} className="flex flex-col gap-4 group cursor-pointer">
+              <div className="aspect-video bg-blue-100 rounded-xl overflow-hidden relative border-4 border-transparent group-hover:border-blue-200 transition-colors">
+                <div className="absolute inset-0 bg-blue-900/5 group-hover:bg-transparent transition-colors duration-300"></div>
+                <div className="w-full h-full bg-blue-200 flex flex-col items-center justify-center text-blue-400 font-bold uppercase">
+                  <span className="material-symbols-outlined text-4xl mb-2 opacity-50">newspaper</span>
+                  <span>Placeholder {i + 1}</span>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-blue-500 mb-2">
+                  <span>{news.category}</span>
+                  <span className="w-1 h-1 rounded-full bg-blue-300"></span>
+                  <span>{news.date}</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-black leading-tight text-blue-950 group-hover:text-blue-600 transition-colors">{news.title}</h3>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
+function AboutScene() {
+  return (
+    <section className="py-32 md:py-48 bg-blue-950 text-white relative z-20 overflow-hidden">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-8">
+              Tentang <br /><span className="text-blue-400">Monoframe</span>
+            </h2>
+            <p className="text-xl md:text-2xl font-medium leading-relaxed text-blue-100 mb-12">
+              Lahir dari hasrat untuk menggabungkan estetika visual dan inovasi digital. Monoframe hadir untuk merekam momen melalui lensa dan merangkai cerita melalui baris kode.
+            </p>
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-8">Perjalanan Kami</h3>
+                <div className="border-l-[3px] border-blue-800/50 p-0 m-0 pl-10 space-y-10 relative">
+
+                  <div className="relative">
+                    <div className="absolute -left-[49px] top-1 w-6 h-6 rounded-full bg-blue-950 border-4 border-blue-400 z-10"></div>
+                    <div className="font-black text-3xl text-white mb-2 tracking-tighter">2023 <span className="text-blue-400/50 ml-2">Awal Mula</span></div>
+                    <p className="text-blue-200 leading-relaxed text-lg">Dimulai sebagai studio fotografi kecil, melayani klien personal dan dokumentasi acara.</p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute -left-[49px] top-1 w-6 h-6 rounded-full bg-blue-950 border-4 border-blue-500 z-10"></div>
+                    <div className="font-black text-3xl text-white mb-2 tracking-tighter">2024 <span className="text-blue-500/50 ml-2">Ekspansi Digital</span></div>
+                    <p className="text-blue-200 leading-relaxed text-lg">Lahirnya lini Monodev untuk menjawab kebutuhan transformasi digital UMKM dan korporasi.</p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute -left-[49px] top-1 w-6 h-6 rounded-full bg-blue-300 border-4 border-blue-100 shadow-[0_0_20px_rgba(147,197,253,0.8)] z-10"></div>
+                    <div className="font-black text-3xl text-white mb-2 tracking-tighter">Hari Ini <span className="text-blue-300/50 ml-2">Ekosistem Kreatif</span></div>
+                    <p className="text-blue-200 leading-relaxed text-lg">Sinergi penuh antara Studio, Photobooth (Monobox), Development, dan Creative Agency.</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <div className="bg-blue-900/30 p-10 rounded-3xl border border-blue-800/50 backdrop-blur-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center opacity-70">
+                <div className="text-xl md:text-2xl font-black italic text-center leading-none">BRAND<br />A</div>
+                <div className="text-xl md:text-2xl font-black tracking-widest text-center leading-none">COMP<br />B</div>
+                <div className="text-xl md:text-2xl font-bold uppercase font-serif text-center leading-none">Studio C</div>
+                <div className="text-xl md:text-2xl font-black text-center leading-none">STARTUP<br />D</div>
+                <div className="text-xl md:text-2xl font-black italic text-center leading-none">EVENT E</div>
+                <div className="text-lg md:text-xl font-bold uppercase tracking-tighter text-center leading-none">AGENCY F</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-700/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-700/20 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+    </section>
+  )
+}
+
+// ---- SCENE 7: SOCIALS (SOSIAL MEDIA PRODUK) ----
+function SocialsScene() {
+  return (
+    <section className="py-24 md:py-32 bg-blue-50 relative z-20">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-blue-950 mb-6">Sosial Media <span className="text-transparent text-stroke-2-blue">Produk</span></h2>
+          <p className="text-blue-800/70 font-medium max-w-2xl mx-auto text-lg">Ikuti perjalanan keseharian kami, behind the scenes, dan karya terbaru di Instagram masing-masing layanan.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-6 md:gap-8 max-w-5xl">
+          {[
+            { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
+            { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
+            { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
+          ].map((soc, i) => (
+            <motion.a
+              href="#"
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className={`group block relative rounded-3xl overflow-hidden aspect-[4/5] md:aspect-square shadow-2xl ${soc.shadow} hover:-translate-y-2 transition-all duration-500`}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${soc.color} opacity-90 group-hover:opacity-100 transition-opacity duration-500`}></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-white text-center z-10 transition-transform duration-500 group-hover:scale-110">
+                <span className="material-symbols-outlined text-6xl mb-6 opacity-80 group-hover:opacity-100 transition-opacity">photo_camera</span>
+                <span className="font-bold text-sm uppercase tracking-widest mb-2 opacity-80">{soc.name}</span>
+                <span className="font-black text-2xl md:text-3xl tracking-tighter">{soc.tag}</span>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ---- SCENE 8: FAQ (PERTANYAAN YANG SERING DITANYAKAN) ----
+const FAQ_DUMMY = [
+  { q: "Apakah saya bisa memesan layanan Monobox untuk acara di luar kota?", a: "Saat ini kami fokus melayani area [Nama Kota] dan sekitarnya. Namun, untuk acara berskala besar di luar kota, silakan hubungi tim kami untuk mendiskusikan kemungkinan logistik." },
+  { q: "Berapa lama proses pembuatan website di Monodev?", a: "Waktu pengerjaan bervariasi bergantung pada kompleksitas proyek. Untuk website Company Profile standar, biasanya memakan waktu 2-3 minggu. Sedangkan untuk aplikasi web custom bisa memakan waktu 1-3 bulan." },
+  { q: "Apakah Monoframe Studio menyediakan jasa makeup artist (MUA)?", a: "Kami memiliki rekanan MUA profesional yang bisa ditambahkan ke dalam paket pemotretan Anda dengan biaya tambahan. Silakan sampaikan kebutuhan ini saat melakukan pemesanan sesi." },
+  { q: "Bagaimana sistem pembayaran untuk layanan joki tugas Monodev?", a: "Kami menerapkan sistem down payment (DP) sebesar 50% di awal, dan pelunasan 50% setelah tugas selesai dikerjakan dan diperlihatkan hasilnya." },
+]
+
+function FAQScene() {
+  const [openIndex, setOpenIndex] = React.useState<number | null>(0);
+
+  return (
+    <section className="py-24 md:py-32 bg-white relative z-20">
+      <div className="max-w-screen-md mx-auto px-6 md:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-blue-950 mb-4">FAQ</h2>
+          <p className="text-blue-800/60 font-medium pb-2 text-lg">Pertanyaan yang sering ditanyakan</p>
+        </div>
+
+        <div className="space-y-4">
+          {FAQ_DUMMY.map((faq, i) => (
+            <div key={i} className="border-b-2 border-blue-50 pb-4">
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full text-left py-4 flex justify-between items-center group gap-6"
+              >
+                <span className={`font-bold text-lg md:text-xl transition-colors ${openIndex === i ? 'text-blue-600' : 'text-blue-950 group-hover:text-blue-700'}`}>
+                  {faq.q}
+                </span>
+                <span className={`material-symbols-outlined text-blue-400 transition-transform duration-300 flex-shrink-0 ${openIndex === i ? 'rotate-180' : ''}`}>
+                  expand_more
+                </span>
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+              >
+                <p className="text-blue-800/70 pb-6 pr-8 leading-relaxed text-lg">
+                  {faq.a}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function HomePage() {
   const containerRef = React.useRef(null)
@@ -221,6 +419,10 @@ export default function HomePage() {
         <NarrativeScene />
         <PillarsScene />
         <ArchiveScene />
+        <NewsScene />
+        <AboutScene />
+        <SocialsScene />
+        <FAQScene />
 
         {/* 5. MASSIVE FOOTER / CTA (CURTAIN REVEAL) */}
         {/* We achieve a curtain reveal by making the footer fixed at the bottom, 
