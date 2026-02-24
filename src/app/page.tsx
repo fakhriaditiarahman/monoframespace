@@ -4,16 +4,17 @@ import * as React from "react"
 import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Header } from "@/components/layout/Header"
+import { ProductSlider } from "@/components/home/ProductSlider"
 
 // ---- SCENE 1: THE SPARK (HERO) ----
 function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   // As we scroll, the text scales up massively (creating a zoom-through effect)
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 20])
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0])
-  const blur = useTransform(scrollYProgress, [0, 0.8, 1], ["blur(0px)", "blur(0px)", "blur(20px)"])
+  const scale = useTransform(scrollYProgress, [0, 0.6], [1, 20])
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
+  const blur = useTransform(scrollYProgress, [0, 0.6, 0.8], ["blur(0px)", "blur(10px)", "blur(40px)"])
 
   return (
-    <section className="relative h-[150vh] bg-blue-50">
+    <section className="relative h-[180vh] bg-blue-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Abstract animated gradient bg */}
         <div className="absolute inset-0 z-0 opacity-40 blur-[100px]">
@@ -216,6 +217,7 @@ export default function HomePage() {
       <Header />
       <div ref={containerRef} className="bg-blue-50 text-blue-950 min-h-screen selection:bg-blue-950 selection:text-white font-sans relative">
         <HeroScene scrollYProgress={scrollYProgress} />
+        <ProductSlider />
         <NarrativeScene />
         <PillarsScene />
         <ArchiveScene />
