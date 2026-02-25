@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Header } from "@/components/layout/Header"
 import { ProductSlider } from "@/components/home/ProductSlider"
 
@@ -299,13 +299,27 @@ function AboutScene() {
             <div className="bg-blue-900/30 p-10 rounded-3xl border border-blue-800/50 backdrop-blur-sm relative overflow-hidden group">
               <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center opacity-70">
-                <div className="text-xl md:text-2xl font-black italic text-center leading-none">BRAND<br />A</div>
-                <div className="text-xl md:text-2xl font-black tracking-widest text-center leading-none">COMP<br />B</div>
-                <div className="text-xl md:text-2xl font-bold uppercase font-serif text-center leading-none">Studio C</div>
-                <div className="text-xl md:text-2xl font-black text-center leading-none">STARTUP<br />D</div>
-                <div className="text-xl md:text-2xl font-black italic text-center leading-none">EVENT E</div>
-                <div className="text-lg md:text-xl font-bold uppercase tracking-tighter text-center leading-none">AGENCY F</div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center">
+                {[
+                  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
+                  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
+                  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+                  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
+                  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
+                  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
+                ].map((partner, i) => (
+                  <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
+                    <img
+                      src={partner.url}
+                      alt={partner.name}
+                      className="h-8 md:h-10 max-w-[120px] object-contain brightness-0 invert opacity-50 group-hover/logo:opacity-100 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${partner.name}&background=random&color=fff&font-size=0.33&length=3&rounded=true`;
+                        e.currentTarget.className = "h-10 md:h-14 object-contain opacity-50 group-hover/logo:opacity-100 transition-all duration-300 grayscale";
+                      }}
+                    />
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
@@ -412,6 +426,36 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Cinematic Blue Zigzag Line Scroll Progress */}
+      <div className="fixed top-0 left-0 w-8 h-full z-[9999] pointer-events-none mix-blend-screen drop-shadow-[0_0_15px_rgba(56,189,248,0.8)]">
+        <svg
+          className="w-full h-full"
+          preserveAspectRatio="none"
+          viewBox="0 0 100 1000"
+          fill="none"
+          stroke="url(#blue-gradient)"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <defs>
+            <linearGradient id="blue-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#22d3ee" />
+              <stop offset="50%" stopColor="#3b82f6" />
+              <stop offset="100%" stopColor="#4f46e5" />
+            </linearGradient>
+          </defs>
+          {/* A long zigzag path traversing top to bottom */}
+          <motion.path
+            d="M 50 0 L 80 50 L 20 150 L 80 250 L 20 350 L 80 450 L 20 550 L 80 650 L 20 750 L 80 850 L 20 950 L 50 1000"
+            style={{
+              pathLength: scrollYProgress,
+              filter: "drop-shadow(0px 0px 8px rgba(56, 189, 248, 0.8))"
+            }}
+          />
+        </svg>
+      </div>
+
       <Header />
       <div ref={containerRef} className="bg-blue-50 text-blue-950 min-h-screen selection:bg-blue-950 selection:text-white font-sans relative">
         <HeroScene scrollYProgress={scrollYProgress} />
