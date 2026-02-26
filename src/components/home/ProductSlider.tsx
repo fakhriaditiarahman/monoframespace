@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Navigation, Pagination, A11y } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 
@@ -42,11 +43,16 @@ export function ProductSlider() {
         {PRODUCTS.map((product) => (
           <SwiperSlide key={product.id}>
             <div className="relative w-full h-[50vh] md:h-[60vh] px-16 md:px-20 flex items-center justify-center bg-transparent">
-              <img
-                src={product.image}
-                alt={product.id}
-                className="w-full max-w-6xl h-full object-cover rounded-2xl shadow-2xl bg-transparent"
-              />
+              <div className="relative w-full max-w-6xl h-full">
+                <Image
+                  src={product.image}
+                  alt={product.id}
+                  fill
+                  className="object-cover rounded-2xl shadow-2xl"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                  priority={product.id === "monobox"}
+                />
+              </div>
             </div>
           </SwiperSlide>
         ))}
