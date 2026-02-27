@@ -2,6 +2,7 @@
 
 import { Navigation, Pagination, A11y } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
+import Image from "next/image"
 
 // Import Swiper styles
 import "swiper/css"
@@ -39,14 +40,25 @@ export function ProductSlider() {
         pagination={{ clickable: true }}
         className="product-slider bg-transparent"
       >
-        {PRODUCTS.map((product) => (
+        {PRODUCTS.map((product, index) => (
           <SwiperSlide key={product.id}>
             <div className="relative w-full h-[50vh] md:h-[60vh] px-16 md:px-20 flex items-center justify-center bg-transparent">
-              <img
-                src={product.image}
-                alt={product.id}
-                className="w-full max-w-6xl h-full object-cover rounded-2xl shadow-2xl bg-transparent"
-              />
+              <div className="relative w-full max-w-6xl h-full rounded-2xl shadow-2xl overflow-hidden">
+                {/*
+                  ⚡ Bolt Optimization: Replaced <img> with next/image
+                  - Automatic image optimization (format, size)
+                  - Lazy loading by default (except first slide)
+                  - Prevents layout shift with fill layout
+                */}
+                <Image
+                  src={product.image}
+                  alt={product.id}
+                  fill
+                  className="object-cover bg-transparent"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  priority={index === 0}
+                />
+              </div>
             </div>
           </SwiperSlide>
         ))}
