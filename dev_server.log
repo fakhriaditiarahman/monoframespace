@@ -7,9 +7,9 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 1071ms
+✓ Ready in 1672ms
 
 warn - The class `duration-[20s]` is ambiguous and matches multiple utilities.
 warn - If this is content and not a class, replace it with `duration-&lsqb;20s&rsqb;` to silence this warning.
 ○ Compiling / ...
- GET / 200 in 6.2s (compile: 5.7s, render: 561ms)
+ GET / 200 in 11.3s (compile: 9.7s, render: 1622ms)

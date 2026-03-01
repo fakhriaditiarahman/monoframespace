@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Header } from "@/components/layout/Header"
 import { ProductSlider } from "@/components/home/ProductSlider"
@@ -118,10 +119,18 @@ function PillarsScene() {
               </div>
 
               <div className="w-full md:w-1/2 aspect-square md:aspect-video relative overflow-hidden rounded-3xl z-10 group">
-                <motion.img
+                {/*
+                  ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                  - The previous <motion.img> bypassed Next.js image optimization
+                  - Replaced with Next.js <Image> for automatic lazy loading, format selection (WebP/AVIF), and resolution scaling
+                  - Hover scaling effect maintained using standard Tailwind CSS classes on Next/Image
+                */}
+                <Image
                   src={srv.image}
                   alt={srv.name}
-                  className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
+                  fill
+                  className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
 
@@ -188,10 +197,17 @@ function PortfolioCard({ item, index }: { item: any, index: number }) {
   return (
     <motion.div ref={ref} style={{ y, opacity, scale }} className={`flex flex-col gap-6 ${index % 2 === 1 ? 'md:mt-32' : ''}`}>
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl group cursor-pointer bg-blue-100 shadow-xl">
-        <motion.img
+        {/*
+          ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+          - Using next/image for automatic optimization (WebP/AVIF), lazy loading, and exact resolution sizes
+          - The visual hover effect is preserved via standard Tailwind classes
+        */}
+        <Image
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 opacity-90 group-hover:opacity-100"
+          fill
+          className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 opacity-90 group-hover:opacity-100"
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
         <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors duration-500" />
 
