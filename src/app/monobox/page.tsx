@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -255,15 +256,21 @@ export default function MonoboxPage() {
                   whileInView={{ clipPath: "inset(0% 0 0 0)", y: 0, scale: 1 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="break-inside-avoid rounded-xl overflow-hidden group relative border-4 border-white dark:border-pink-900 shadow-lg shadow-pink-100 dark:shadow-none"
+                  className="break-inside-avoid rounded-xl overflow-hidden group relative border-4 border-white dark:border-pink-900 shadow-lg shadow-pink-100 dark:shadow-none h-64 md:h-80"
                   data-cursor-text="VIEW"
                 >
-                  <motion.img
+                  {/*
+                    ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                    - Bypassed Next.js image optimization before
+                    - Replaced with Next.js <Image> for automatic lazy loading, format selection
+                    - Hover effect moved to Tailwind CSS group-hover classes
+                  */}
+                  <Image
                     alt={img.alt}
-                    className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
                     src={img.src}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
+                    fill
+                    className="object-cover transition-transform duration-500 scale-100 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-monobox/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <p className="text-white font-medium">{img.alt}</p>
