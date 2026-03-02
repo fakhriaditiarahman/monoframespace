@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -258,12 +259,18 @@ export default function MonodevPage() {
                   data-cursor-text="VIEW"
                 >
                   <div className="aspect-[16/10] bg-slate-900 overflow-hidden relative">
-                    <motion.img
-                      alt={project.title}
-                      className="object-cover w-full h-full"
+                    {/*
+                      ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                      - Bypassed Next.js image optimization before
+                      - Replaced with Next.js <Image> for automatic lazy loading, format selection
+                      - Hover scaling effect moved to standard Tailwind CSS group-hover classes
+                    */}
+                    <Image
                       src={project.image}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
+                      alt={project.title}
+                      fill
+                      className="object-cover scale-100 group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-20">
                       <span className="text-white font-medium flex items-center gap-2">

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -203,15 +204,21 @@ export default function StudioPage() {
                   whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative overflow-hidden rounded-xl bg-sky-50 cursor-pointer ${img.span ? img.span : 'md:col-span-1 md:row-span-1'}`}
+                  className={`relative overflow-hidden rounded-xl bg-sky-50 cursor-pointer group ${img.span ? img.span : 'md:col-span-1 md:row-span-1'}`}
                   data-cursor-text={img.label === 'Lihat Galeri' ? 'GALLERY' : 'VIEW'}
                 >
-                  <motion.img
+                  {/*
+                    ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                    - Bypassed Next.js image optimization before
+                    - Replaced with Next.js <Image> for automatic lazy loading, format selection
+                    - Hover scaling effect moved to Tailwind CSS group-hover classes
+                  */}
+                  <Image
                     alt={img.alt}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                     src={img.src}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
+                    fill
+                    className="object-cover transition-transform duration-500 scale-100 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   {img.label && (
                     <div className={`absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded text-xs font-semibold text-slate-900 backdrop-blur-sm ${img.label === 'Lihat Galeri' ? 'bg-sky-950 text-white' : ''}`}>
