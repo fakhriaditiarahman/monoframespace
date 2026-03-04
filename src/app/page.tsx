@@ -271,6 +271,27 @@ function NewsScene() {
 }
 
 // ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
+function PartnerLogo({ partner }: { partner: { name: string, url: string } }) {
+  const [error, setError] = React.useState(false);
+
+  return (
+    <div className="relative h-8 w-24 md:h-10 md:w-28 flex justify-center items-center">
+      {/*
+        ⚡ Bolt Optimization: Replaced <img> with next/image
+        - SVGs scale better, but using next/image enables lazy loading automatically
+      */}
+      <Image
+        src={error ? `https://ui-avatars.com/api/?name=${partner.name}&background=random&color=fff&font-size=0.33&length=3&rounded=true` : partner.url}
+        alt={partner.name}
+        fill
+        unoptimized
+        className={`object-contain transition-all duration-300 ${error ? 'opacity-50 group-hover/logo:opacity-100 grayscale' : 'brightness-0 invert opacity-50 group-hover/logo:opacity-100'}`}
+        onError={() => setError(true)}
+      />
+    </div>
+  );
+}
+
 function AboutScene() {
   return (
     <section className="py-32 md:py-48 bg-blue-950 text-white relative z-20 overflow-hidden">
@@ -325,15 +346,7 @@ function AboutScene() {
                   { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
                 ].map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
-                    <img
-                      src={partner.url}
-                      alt={partner.name}
-                      className="h-8 md:h-10 max-w-[120px] object-contain brightness-0 invert opacity-50 group-hover/logo:opacity-100 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${partner.name}&background=random&color=fff&font-size=0.33&length=3&rounded=true`;
-                        e.currentTarget.className = "h-10 md:h-14 object-contain opacity-50 group-hover/logo:opacity-100 transition-all duration-300 grayscale";
-                      }}
-                    />
+                    <PartnerLogo partner={partner} />
                   </motion.div>
                 ))}
               </div>
