@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -257,13 +258,18 @@ export default function MonodevPage() {
                   className="group relative bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 transition-all hover:shadow-2xl hover:shadow-blue-500/20 hover:border-monodev/50"
                   data-cursor-text="VIEW"
                 >
-                  <div className="aspect-[16/10] bg-slate-900 overflow-hidden relative">
-                    <motion.img
+                  <div className="relative aspect-[16/10] bg-slate-900 overflow-hidden">
+                    {/*
+                      ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                      - Using Next.js Image for built-in optimizations like automatic WebP format and lazy loading.
+                      - Moved `whileHover` framer-motion effect to standard Tailwind CSS class `group-hover:scale-105`.
+                    */}
+                    <Image
                       alt={project.title}
-                      className="object-cover w-full h-full"
+                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                       src={project.image}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-20">
                       <span className="text-white font-medium flex items-center gap-2">

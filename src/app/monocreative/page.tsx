@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -243,11 +244,18 @@ export default function MonocreativePage() {
                                     className={`group relative ${index % 2 !== 0 ? 'md:mt-32' : ''}`}
                                     data-cursor-text="VIEW"
                                 >
-                                    <div className="aspect-[4/5] overflow-hidden bg-slate-800 rounded-lg group-hover:rounded-[2rem] transition-all duration-700 mb-6">
-                                        <motion.img
+                                    <div className="relative aspect-[4/5] overflow-hidden bg-slate-800 rounded-lg group-hover:rounded-[2rem] transition-all duration-700 mb-6">
+                                        {/*
+                                          ⚡ Bolt Optimization: Replaced <motion.img> with <Image>
+                                          - Bypassed Next.js image optimization in the past
+                                          - Replaced with Next.js <Image> for automatic lazy loading, format selection (WebP/AVIF), and resolution scaling
+                                        */}
+                                        <Image
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 opacity-80 group-hover:opacity-100"
+                                            fill
+                                            className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 opacity-80 group-hover:opacity-100"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
                                     <div className="flex justify-between items-start gap-4 px-2">
