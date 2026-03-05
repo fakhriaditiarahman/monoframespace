@@ -167,10 +167,20 @@ export default function StudioPage() {
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {sessions.map((session, index) => (
                 <Card key={index} className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-sky-100 transition-all hover:shadow-xl hover:shadow-sky-100 dark:bg-slate-900 dark:ring-slate-800 dark:hover:shadow-none">
-                  <div className="aspect-[4/5] overflow-hidden bg-sky-100">
-                    <img alt={session.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src={session.image} />
+                  <div className="aspect-[4/5] overflow-hidden bg-sky-100 relative">
+                    {/*
+                      ⚡ Bolt Optimization: Replaced <img> with next/image
+                      - Utilizing next/image with 'fill' for automatic lazy loading, proper resolution scaling based on aspect-ratio container, and WebP format selection
+                    */}
+                    <Image
+                      alt={session.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={session.image}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-sky-950/90 via-transparent to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-sky-950/90 via-transparent to-transparent opacity-60 pointer-events-none"></div>
                   <div className="absolute bottom-0 left-0 p-6 text-white">
                     <div className="mb-2 inline-flex items-center rounded-md bg-white/20 px-2 py-1 text-xs font-medium backdrop-blur-sm text-sky-50">
                       {session.category}
