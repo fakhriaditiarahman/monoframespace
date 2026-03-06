@@ -185,11 +185,20 @@ export default function MonodevPage() {
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     <div className="ml-2 bg-slate-800 rounded px-2 py-0.5 text-xs text-slate-400 font-mono">index.tsx</div>
                   </div>
-                  <img
-                    alt="Developer coding on laptop"
-                    className="w-full rounded-lg shadow-inner ring-1 ring-white/5 opacity-90"
-                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
-                  />
+                  <div className="relative w-full aspect-video md:aspect-[4/3] rounded-lg overflow-hidden shadow-inner ring-1 ring-white/5">
+                    {/*
+                      ⚡ Bolt Optimization: Replaced <img> with <Image>
+                      - The previous <img> bypassed Next.js image optimization
+                      - Replaced with Next.js <Image> for automatic lazy loading, format selection (WebP/AVIF), and resolution scaling
+                    */}
+                    <Image
+                      alt="Developer coding on laptop"
+                      className="object-cover opacity-90"
+                      src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </div>
                 </motion.div>
               </div>
             </div>
