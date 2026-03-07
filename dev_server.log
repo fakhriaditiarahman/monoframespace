@@ -1,5 +1,5 @@
 
-> monoframe@1.0.0 dev
+> monoframe@1.0.0 dev /app
 > next dev
 
 ▲ Next.js 16.1.6 (Turbopack)
@@ -7,9 +7,9 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 1672ms
+✓ Ready in 1071ms
 
 warn - The class `duration-[20s]` is ambiguous and matches multiple utilities.
 warn - If this is content and not a class, replace it with `duration-&lsqb;20s&rsqb;` to silence this warning.
-○ Compiling / ...
- GET / 200 in 11.3s (compile: 9.7s, render: 1622ms)
+○ Compiling /monodev ...
+ GET /monodev 200 in 6.4s (compile: 5.6s, render: 758ms)
