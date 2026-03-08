@@ -133,9 +133,12 @@ export default function MonoboxPage() {
                 <div className="flex items-center gap-4 mt-4 text-sm text-slate-500 dark:text-pink-400">
                   <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map((i) => (
-                      <img
+                      /* ⚡ Bolt Optimization: Replaced <img> with next/image */
+                      <Image
                         key={i}
                         alt="Happy customer"
+                        width={32}
+                        height={32}
                         className="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark object-cover"
                         src={`https://images.unsplash.com/photo-${1500000000000 + i * 1000000}?w=100`}
                       />
