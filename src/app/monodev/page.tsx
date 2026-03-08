@@ -163,9 +163,12 @@ export default function MonodevPage() {
                   <div className="flex flex-wrap gap-3 sm:gap-4">
                     {techStacks.map((tech) => (
                       <div key={tech.name} className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-monodev/50 hover:shadow-md hover:shadow-monodev/10 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 group cursor-default" data-cursor-text={tech.name}>
-                        <img
+                        {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
+                        <Image
                           src={tech.icon}
                           alt={tech.name}
+                          width={24}
+                          height={24}
                           className={`h-6 w-6 object-contain group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ${tech.invertDark ? 'dark:invert opacity-90 group-hover:opacity-100' : ''}`}
                         />
                         <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-monodev transition-colors">{tech.name}</span>
@@ -185,10 +188,14 @@ export default function MonodevPage() {
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     <div className="ml-2 bg-slate-800 rounded px-2 py-0.5 text-xs text-slate-400 font-mono">index.tsx</div>
                   </div>
-                  <img
+                  {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
+                  <Image
                     alt="Developer coding on laptop"
-                    className="w-full rounded-lg shadow-inner ring-1 ring-white/5 opacity-90"
+                    className="w-full h-auto rounded-lg shadow-inner ring-1 ring-white/5 opacity-90"
                     src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800"
+                    width={800}
+                    height={533}
+                    sizes="(max-width: 1024px) 100vw, 800px"
                   />
                 </motion.div>
               </div>

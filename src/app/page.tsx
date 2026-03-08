@@ -325,9 +325,12 @@ function AboutScene() {
                   { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
                 ].map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
-                    <img
+                    {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
+                    <Image
                       src={partner.url}
                       alt={partner.name}
+                      width={120}
+                      height={40}
                       className="h-8 md:h-10 max-w-[120px] object-contain brightness-0 invert opacity-50 group-hover/logo:opacity-100 transition-all duration-300"
                       onError={(e) => {
                         e.currentTarget.src = `https://ui-avatars.com/api/?name=${partner.name}&background=random&color=fff&font-size=0.33&length=3&rounded=true`;
