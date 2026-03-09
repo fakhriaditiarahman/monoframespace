@@ -4,6 +4,28 @@ import * as React from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
+// ⚡ Bolt Optimization: Moved static navItems array outside component body
+// 💡 What: Extracted the static navigation configuration to the module scope
+// 🎯 Why: Prevents creating a new array and new objects on every single render of the Header
+// 📊 Impact: Minor memory optimization. Reduces garbage collection pressure during scroll events
+//    which trigger state updates (scrolled state) in the Header component.
+const navItems = [
+  { label: "Beranda", href: "/" },
+  { label: "Berita", href: "#" },
+  { label: "Tentang", href: "#" },
+  {
+    label: "Produk",
+    href: "#",
+    children: [
+      { label: "Studio", href: "/studio" },
+      { label: "Monodev", href: "/monodev" },
+      { label: "Monobox", href: "/monobox" },
+      { label: "Mono Creative", href: "/monocreative" },
+    ]
+  },
+  { label: "Kontak", href: "#" },
+]
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
@@ -16,23 +38,6 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  const navItems = [
-    { label: "Beranda", href: "/" },
-    { label: "Berita", href: "#" },
-    { label: "Tentang", href: "#" },
-    {
-      label: "Produk",
-      href: "#",
-      children: [
-        { label: "Studio", href: "/studio" },
-        { label: "Monodev", href: "/monodev" },
-        { label: "Monobox", href: "/monobox" },
-        { label: "Mono Creative", href: "/monocreative" },
-      ]
-    },
-    { label: "Kontak", href: "#" },
-  ]
 
   return (
     <>
