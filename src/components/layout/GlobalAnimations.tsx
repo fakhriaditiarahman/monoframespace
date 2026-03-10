@@ -28,13 +28,19 @@ function CustomCursor() {
         // Center cursor
         gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
+        // ⚡ Bolt Optimization: Use gsap.quickTo for high-frequency mousemove events
+        // 💡 What: Replaced gsap.to() inside mousemove with gsap.quickTo()
+        // 🎯 Why: mousemove fires very rapidly. gsap.to() creates a new tween object each time,
+        //         causing garbage collection pressure and layout thrashing. quickTo() is specifically
+        //         designed by GSAP to bypass tween parsing and object creation for this exact use case.
+        // 📊 Impact: Significantly smoother custom cursor, massive reduction in JS execution time
+        //         during cursor movement, and lower memory footprint.
+        const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power2.out" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power2.out" });
+
         const moveCursor = (e: MouseEvent) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.15,
-                ease: 'power2.out',
-            });
+            xTo(e.clientX);
+            yTo(e.clientY);
         };
 
         const handleMouseOver = (e: MouseEvent) => {
