@@ -28,13 +28,15 @@ function CustomCursor() {
         // Center cursor
         gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
+        // Optimization: Use gsap.quickTo() for high-frequency events (mousemove).
+        // It's significantly faster than gsap.to() as it avoids creating a new tween object
+        // on every mouse move, preventing layout thrashing and garbage collection overhead.
+        const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power2.out" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power2.out" });
+
         const moveCursor = (e: MouseEvent) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.15,
-                ease: 'power2.out',
-            });
+            xTo(e.clientX);
+            yTo(e.clientY);
         };
 
         const handleMouseOver = (e: MouseEvent) => {
