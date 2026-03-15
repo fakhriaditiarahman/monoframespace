@@ -80,8 +80,12 @@ function CustomCursor() {
             }
         };
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mouseover', handleMouseOver);
+        // ⚡ Bolt Optimization: Added { passive: true } to mouse event listeners
+        // 💡 What: Marked high-frequency mouse event listeners as passive
+        // 🎯 Why: Tells the browser the listeners won't call preventDefault(). While more critical for scrolling, this still slightly improves main thread responsiveness for pointer events.
+        // 📊 Impact: Minor reduction in event dispatch overhead during rapid cursor movement.
+        window.addEventListener('mousemove', moveCursor, { passive: true });
+        window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
