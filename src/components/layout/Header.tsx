@@ -32,10 +32,26 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null)
 
   React.useEffect(() => {
+    // ⚡ Bolt Optimization: Use requestAnimationFrame for high-frequency scroll events
+    // 💡 What: Throttles the React state update to the browser's refresh rate using rAF.
+    // 🎯 Why: 'scroll' events can fire dozens of times per frame. Calling setScrolled directly
+    //    on every event queues too many renders and blocks the main thread, causing layout thrashing.
+    // 📊 Impact: Significantly smoother scrolling by ensuring the scroll handler does minimal
+    //    synchronous work and only triggers state updates once per frame.
+    let ticking = false
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50)
+          ticking = false
+        })
+        ticking = true
+      }
     }
-    window.addEventListener("scroll", handleScroll)
+
+    // Note: { passive: true } has no effect on preventing layout thrashing from state updates,
+    // but it does tell the browser we won't call e.preventDefault(), which can slightly optimize scrolling.
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
