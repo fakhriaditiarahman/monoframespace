@@ -32,9 +32,22 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null)
 
   React.useEffect(() => {
+    let ticking = false;
+
+    // ⚡ Bolt Optimization: Use requestAnimationFrame to throttle scroll events
+    // 💡 What: Throttled the scroll event listener using requestAnimationFrame
+    // 🎯 Why: High-frequency scroll events can cause layout thrashing and performance degradation when they directly trigger state updates
+    // 📊 Impact: Prevents multiple state updates within a single frame, resulting in smoother scrolling performance
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50)
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
