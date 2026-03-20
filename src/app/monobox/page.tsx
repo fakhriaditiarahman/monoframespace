@@ -63,6 +63,19 @@ const galleryImages = [
   { alt: "Foto acara formal elegan", src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600" },
 ]
 
+// ⚡ Bolt Optimization: Extracted static arrays outside of component body
+// 💡 What: Moved the avatar indexes array and feature list array to module scope.
+// 🎯 Why: MonoboxPage contains high-frequency state updates (form inputs trigger re-renders on every keystroke).
+//    Inline arrays are re-created on every render, causing unnecessary memory allocation and GC overhead.
+// 📊 Impact: Reduces garbage collection pressure during form input, improving input responsiveness.
+const AVATAR_INDEXES = [1, 2, 3, 4]
+
+const MONOBOX_FEATURES = [
+  { icon: "ios_share", title: "Berbagi Instan", description: "Bagikan foto langsung ke ponsel Anda melalui SMS, Email, atau AirDrop secara instan." },
+  { icon: "photo_camera", title: "Kualitas Resolusi Tinggi", description: "Kamera DSLR profesional dan pencahayaan studio memastikan foto tajam berkualitas majalah." },
+  { icon: "theater_comedy", title: "Props Kustom", description: "Props bertema, masker digital, dan latar belakang kustom disesuaikan dengan gaya acara Anda." },
+]
+
 export default function MonoboxPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -132,7 +145,7 @@ export default function MonoboxPage() {
                 </div>
                 <div className="flex items-center gap-4 mt-4 text-sm text-slate-500 dark:text-pink-400">
                   <div className="flex -space-x-3">
-                    {[1, 2, 3, 4].map((i) => (
+                    {AVATAR_INDEXES.map((i) => (
                       /* ⚡ Bolt Optimization: Replaced <img> with next/image */
                       <Image
                         key={i}
@@ -177,11 +190,7 @@ export default function MonoboxPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { icon: "ios_share", title: "Berbagi Instan", description: "Bagikan foto langsung ke ponsel Anda melalui SMS, Email, atau AirDrop secara instan." },
-                { icon: "photo_camera", title: "Kualitas Resolusi Tinggi", description: "Kamera DSLR profesional dan pencahayaan studio memastikan foto tajam berkualitas majalah." },
-                { icon: "theater_comedy", title: "Props Kustom", description: "Props bertema, masker digital, dan latar belakang kustom disesuaikan dengan gaya acara Anda." },
-              ].map((feature, i) => (
+              {MONOBOX_FEATURES.map((feature, i) => (
                 <div key={i} className="flex flex-col gap-4 rounded-xl border border-pink-100 dark:border-pink-900 bg-background-light dark:bg-background-dark p-6 hover:shadow-lg hover:shadow-pink-100 dark:hover:shadow-pink-900/20 transition-all duration-300 group">
                   <div className="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-monobox mb-2 group-hover:scale-110 transition-transform">
                     <span className="material-symbols-outlined text-3xl">{feature.icon}</span>

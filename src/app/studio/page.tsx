@@ -87,6 +87,14 @@ const packages = [
   },
 ]
 
+// ⚡ Bolt Optimization: Extracted static arrays outside of component body
+// 💡 What: Moved DAYS_OF_WEEK and DAYS_IN_MONTH arrays to module scope.
+// 🎯 Why: StudioPage contains form state. Inline arrays inside the render method
+//    are re-created on every state update, leading to unnecessary GC overhead.
+// 📊 Impact: Reduces memory allocation and garbage collection during user interaction.
+const DAYS_OF_WEEK = ['Mi', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb']
+const DAYS_IN_MONTH = Array.from({ length: 31 }, (_, i) => i + 1)
+
 export default function StudioPage() {
   const [selectedDate, setSelectedDate] = useState<number | null>(8)
 
@@ -329,12 +337,12 @@ export default function StudioPage() {
                     </div>
                   </div>
                   <div className="grid grid-cols-7 gap-1 md:gap-2 text-center text-xs md:text-sm mb-2">
-                    {['Mi', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'].map((day) => (
+                    {DAYS_OF_WEEK.map((day) => (
                       <span key={day} className="text-slate-400 font-medium py-1 md:py-2">{day}</span>
                     ))}
                   </div>
                   <div className="grid grid-cols-7 gap-1 md:gap-2">
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
+                    {DAYS_IN_MONTH.map((day) => {
                       const isToday = day === 8
                       const isAvailable = [3, 4, 8, 10, 11, 15, 17, 18, 22, 24, 25].includes(day)
                       return (
