@@ -270,6 +270,20 @@ function NewsScene() {
   )
 }
 
+// ⚡ Bolt Optimization: Extracted static arrays outside of component body
+// 💡 What: Moved PARTNERS array to module scope.
+// 🎯 Why: AboutScene may re-render on scroll events if a parent state changes.
+//    Inline arrays are re-created on every render, causing unnecessary memory allocation and GC overhead.
+// 📊 Impact: Minor memory optimization, prevents array recreation.
+const PARTNERS = [
+  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
+  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
+  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
+  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
+  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
+]
+
 // ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
 function AboutScene() {
   return (
@@ -316,14 +330,7 @@ function AboutScene() {
               <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center">
-                {[
-                  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
-                  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
-                  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-                  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
-                  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
-                  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
-                ].map((partner, i) => (
+                {PARTNERS.map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
                     {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
                     <Image
@@ -352,6 +359,17 @@ function AboutScene() {
   )
 }
 
+// ⚡ Bolt Optimization: Extracted static arrays outside of component body
+// 💡 What: Moved SOCIALS array to module scope.
+// 🎯 Why: SocialsScene may re-render on scroll events if a parent state changes.
+//    Inline arrays are re-created on every render, causing unnecessary memory allocation and GC overhead.
+// 📊 Impact: Minor memory optimization, prevents array recreation.
+const SOCIALS = [
+  { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
+  { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
+  { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
+]
+
 // ---- SCENE 7: SOCIALS (SOSIAL MEDIA PRODUK) ----
 function SocialsScene() {
   return (
@@ -363,11 +381,7 @@ function SocialsScene() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-6 md:gap-8 max-w-5xl">
-          {[
-            { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
-            { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
-            { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
-          ].map((soc, i) => (
+          {SOCIALS.map((soc, i) => (
             <motion.a
               href="#"
               key={i}

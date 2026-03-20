@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-13 - [Inline static arrays in high-frequency state components]
+**Learning:** Defining static arrays (like feature lists, partner logos, or calendar days) directly inside the render body of a component that has high-frequency state updates (e.g., form inputs, scroll event state) causes the arrays to be re-created on every single render. This leads to unnecessary memory allocation and garbage collection overhead, which can cause micro-stutters during typing or scrolling.
+**Action:** Always extract static arrays and object configurations outside of the component body (to module scope) to ensure they are created only once, reducing GC pressure and improving input/scroll responsiveness.
