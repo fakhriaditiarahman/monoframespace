@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Header } from "@/components/layout/Header"
@@ -141,12 +140,12 @@ function PillarsScene() {
                 <p className="text-xl md:text-3xl text-blue-900/70 font-medium max-w-lg mb-12">
                   {srv.desc}
                 </p>
-                <Link href={`/${srv.id}`} className="inline-flex items-center gap-6 group w-fit text-blue-950">
+                <a href={`https://${srv.id}.monoframe.id`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-6 group w-fit text-blue-950">
                   <span className="w-16 h-16 rounded-full border border-blue-900/30 flex items-center justify-center group-hover:bg-blue-950 shadow-sm group-hover:text-white transition-all duration-500">
                     <span className="material-symbols-outlined -rotate-45 group-hover:rotate-0 transition-transform duration-500">arrow_forward</span>
                   </span>
                   <span className="text-xl font-bold uppercase tracking-widest">Explore</span>
-                </Link>
+                </a>
               </div>
             </div>
           ))}
@@ -281,7 +280,7 @@ function AboutScene() {
               Tentang <br /><span className="text-blue-400">Monoframe</span>
             </h2>
             <p className="text-xl md:text-2xl font-medium leading-relaxed text-blue-100 mb-12">
-              Lahir dari hasrat untuk menggabungkan estetika visual dan inovasi digital. Monoframe hadir untuk merekam momen melalui lensa dan merangkai cerita melalui baris kode.
+              Lahir dari hasrat untuk menggabungkan estetika visual dan inovasi digital. Monoframe hadir untuk merekam momen anda dan merangkai cerita anda.
             </p>
             <div className="space-y-12">
               <div>
@@ -291,12 +290,12 @@ function AboutScene() {
                   <div className="relative">
                     <div className="absolute -left-[49px] top-1 w-6 h-6 rounded-full bg-blue-950 border-4 border-blue-400 z-10"></div>
                     <div className="font-black text-3xl text-white mb-2 tracking-tighter">2023 <span className="text-blue-400/50 ml-2">Awal Mula</span></div>
-                    <p className="text-blue-200 leading-relaxed text-lg">Dimulai sebagai studio fotografi kecil, melayani klien personal dan dokumentasi acara.</p>
+                    <p className="text-blue-200 leading-relaxed text-lg">Lahir dari cita" kami sebagai mahasiswa semester 3 yang ingin membuka Usaha sendiri yang masih dalam passion .</p>
                   </div>
 
                   <div className="relative">
                     <div className="absolute -left-[49px] top-1 w-6 h-6 rounded-full bg-blue-950 border-4 border-blue-500 z-10"></div>
-                    <div className="font-black text-3xl text-white mb-2 tracking-tighter">2024 <span className="text-blue-500/50 ml-2">Ekspansi Digital</span></div>
+                    <div className="font-black text-3xl text-white mb-2 tracking-tighter">2024 <span className="text-blue-500/50 ml-2">Studio Pertama</span></div>
                     <p className="text-blue-200 leading-relaxed text-lg">Lahirnya lini Monodev untuk menjawab kebutuhan transformasi digital UMKM dan korporasi.</p>
                   </div>
 

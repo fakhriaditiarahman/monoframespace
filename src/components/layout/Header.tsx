@@ -52,6 +52,24 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+
+  const navItems = [
+    { label: "Beranda", href: "/" },
+    { label: "Berita", href: "#" },
+    { label: "Tentang", href: "#" },
+    {
+      label: "Produk",
+      href: "#",
+      children: [
+        { label: "Studio", href: "https://studio.monoframe.id" },
+        { label: "Monodev", href: "https://monodev.monoframe.id" },
+        { label: "Monobox", href: "https://monobox.monoframe.id" },
+        { label: "Mono Creative", href: "https://monocreative.monoframe.id" },
+      ]
+    },
+    { label: "Kontak", href: "#" },
+  ]
+
   return (
     <>
       <motion.nav
@@ -111,13 +129,15 @@ export function Header() {
                         className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-md overflow-hidden py-2"
                       >
                         {item.children.map((child) => (
-                          <Link
+                          <a
                             key={child.label}
                             href={child.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors uppercase tracking-wider"
                           >
                             {child.label}
-                          </Link>
+                          </a>
                         ))}
                       </motion.div>
                     )}
@@ -181,13 +201,15 @@ export function Header() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.3 + i * 0.1 + j * 0.05, duration: 0.4 }}
                           >
-                            <Link
+                            <a
                               href={child.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               onClick={() => setMobileMenuOpen(false)}
                               className="text-xl md:text-3xl font-bold uppercase hover:text-blue-400 transition-colors block py-1"
                             >
                               {child.label}
-                            </Link>
+                            </a>
                           </motion.div>
                         ))}
                       </div>

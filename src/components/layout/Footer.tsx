@@ -1,4 +1,4 @@
-import Link from "next/link"
+
 
 export function Footer() {
   return (
@@ -39,9 +39,10 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-white mb-2">Pillars</span>
-              <Link href="/monobox" className="hover:text-white transition-colors">Monobox</Link>
-              <Link href="/monodev" className="hover:text-white transition-colors">Monodev</Link>
-              <Link href="/studio" className="hover:text-white transition-colors">Studio</Link>
+              <a href="https://monobox.monoframe.id" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Monobox</a>
+              <a href="https://monodev.monoframe.id" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Monodev</a>
+              <a href="https://studio.monoframe.id" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Studio</a>
+              <a href="https://monocreative.monoframe.id" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Monocreative</a>
             </div>
           </div>
         </div>
