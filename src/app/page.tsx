@@ -60,6 +60,20 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+
+// ⚡ Bolt Optimization: Extracted Word component to prevent Rules of Hooks violation
+// 💡 What: Moved the useTransform hook from inside the words.map loop to its own component
+// 🎯 Why: React hooks must be called at the top level of a component. Calling them inside a .map loop creates unstable hook allocations across renders.
+// 📊 Impact: Prevents memory leaks, unstable re-renders, and guarantees hook order stability.
+function Word({ children, progress, range }: { children: React.ReactNode, progress: any, range: [number, number] }) {
+  const opacity = useTransform(progress, range, [0.1, 1])
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {children}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -77,11 +91,10 @@ function NarrativeScene() {
           {words.map((word, i) => {
             const start = i / words.length
             const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
             return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
+              <Word key={i} progress={scrollYProgress} range={[start, end]}>
                 {word}
-              </motion.span>
+              </Word>
             )
           })}
         </p>
