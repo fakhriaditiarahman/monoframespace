@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-03-30 - [useState in high-frequency events]
+**Learning:** Found a component (`MagneticButton`) that updated `React.useState` on every `mousemove` event to drive a Framer Motion animation. This is a massive performance bottleneck because `useState` triggers React component re-renders (and potentially children re-renders) on every single pixel movement, causing severe layout thrashing and garbage collection overhead.
+**Action:** When animating elements based on high-frequency events (like `mousemove` or `scroll`) in Framer Motion, bypass React's render cycle completely. Always use `useMotionValue()` and update it directly via `.set()`, and apply smoothing via `useSpring()`. This communicates directly with the DOM and avoids React re-renders.
