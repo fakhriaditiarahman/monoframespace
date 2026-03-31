@@ -60,6 +60,24 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+const NARRATIVE_TEXT = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
+const NARRATIVE_WORDS = NARRATIVE_TEXT.split(" ")
+
+// ⚡ Bolt Optimization: Extracted loop body into separate component
+// 💡 What: Moved the inner logic of words.map() into its own functional component <NarrativeWord>
+// 🎯 Why: Prevents calling the Framer Motion useTransform hook inside a loop, which violates React's Rules of Hooks.
+// 📊 Impact: Fixes potential memory leaks, re-render bugs, and ensures hook order stability.
+function NarrativeWord({ word, index, total, scrollYProgress }: { word: string, index: number, total: number, scrollYProgress: any }) {
+  const start = index / total
+  const end = start + (1 / total)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -67,23 +85,19 @@ function NarrativeScene() {
     offset: ["start 80%", "end 50%"]
   })
 
-  const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {NARRATIVE_WORDS.map((word, i) => (
+            <NarrativeWord
+              key={i}
+              word={word}
+              index={i}
+              total={NARRATIVE_WORDS.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
@@ -270,6 +284,19 @@ function NewsScene() {
 }
 
 // ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
+// ⚡ Bolt Optimization: Extracted static array outside component
+// 💡 What: Moved the partners array outside of AboutScene
+// 🎯 Why: Prevents re-creating the array on every render
+// 📊 Impact: Reduces memory allocation and garbage collection overhead
+const PARTNERS = [
+  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
+  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
+  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
+  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
+  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
+]
+
 function AboutScene() {
   return (
     <section className="py-32 md:py-48 bg-blue-950 text-white relative z-20 overflow-hidden">
@@ -315,14 +342,7 @@ function AboutScene() {
               <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center">
-                {[
-                  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
-                  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
-                  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-                  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
-                  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
-                  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
-                ].map((partner, i) => (
+                {PARTNERS.map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
                     {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
                     <Image
@@ -352,6 +372,16 @@ function AboutScene() {
 }
 
 // ---- SCENE 7: SOCIALS (SOSIAL MEDIA PRODUK) ----
+// ⚡ Bolt Optimization: Extracted static array outside component
+// 💡 What: Moved the socials array outside of SocialsScene
+// 🎯 Why: Prevents re-creating the array on every render
+// 📊 Impact: Reduces memory allocation and garbage collection overhead
+const SOCIALS = [
+  { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
+  { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
+  { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
+]
+
 function SocialsScene() {
   return (
     <section className="py-24 md:py-32 bg-blue-50 relative z-20">
@@ -362,11 +392,7 @@ function SocialsScene() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-6 md:gap-8 max-w-5xl">
-          {[
-            { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
-            { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
-            { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
-          ].map((soc, i) => (
+          {SOCIALS.map((soc, i) => (
             <motion.a
               href="#"
               key={i}
