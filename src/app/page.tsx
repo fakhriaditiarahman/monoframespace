@@ -60,6 +60,18 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+function AnimatedWord({ word, i, totalWords, scrollYProgress }: { word: string, i: number, totalWords: number, scrollYProgress: any }) {
+  const start = i / totalWords
+  const end = start + (1 / totalWords)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -68,22 +80,23 @@ function NarrativeScene() {
   })
 
   const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
+  // ⚡ Bolt Optimization: Memoize the split operation and extract loop body
+  // to avoid Rules of Hooks violation and prevent unnecessary array creation
+  const words = React.useMemo(() => text.split(" "), [text])
 
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {words.map((word, i) => (
+            <AnimatedWord
+              key={i}
+              word={word}
+              i={i}
+              totalWords={words.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
