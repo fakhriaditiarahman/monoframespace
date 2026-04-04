@@ -60,6 +60,22 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+// ⚡ Bolt Optimization: Extracted NarrativeWord component
+// 💡 What: Extracted the `.map()` body into a separate component.
+// 🎯 Why: Calling hooks like `useTransform` inside a `.map()` loop violates React's Rules of Hooks. It can cause hook order instability, memory leaks, and severe re-render bugs.
+// 📊 Impact: Prevents memory leaks and ensures stable hook execution, improving long-term page performance.
+function NarrativeWord({ word, index, totalWords, scrollYProgress }: { word: string, index: number, totalWords: number, scrollYProgress: any }) {
+  const start = index / totalWords
+  const end = start + (1 / totalWords)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -74,16 +90,15 @@ function NarrativeScene() {
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {words.map((word, i) => (
+            <NarrativeWord
+              key={i}
+              word={word}
+              index={i}
+              totalWords={words.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
