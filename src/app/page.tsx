@@ -13,6 +13,12 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
   const blur = useTransform(scrollYProgress, [0, 0.6, 0.8], ["blur(0px)", "blur(10px)", "blur(40px)"])
 
+  // ⚡ Bolt Optimization: Extracted useTransform from inline style prop
+  // 💡 What: Moved the `useTransform` call for the scroll indicator to the top level of the component
+  // 🎯 Why: Fixes a Rules of Hooks violation. Hooks cannot be called conditionally or inside JSX properties directly if React renders differently.
+  // 📊 Impact: Ensures hook order stability and adherence to React guidelines.
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+
   return (
     <section className="relative h-[180vh] bg-blue-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -42,7 +48,7 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 
         {/* Scroll Indicator */}
         <motion.div
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+          style={{ opacity: scrollIndicatorOpacity }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
         >
           <span className="text-xs tracking-widest uppercase font-bold text-blue-800/60">Scroll down</span>
@@ -60,6 +66,29 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+// ⚡ Bolt Optimization: Extracted NARRATIVE_TEXT and NARRATIVE_WORDS outside component body
+// 💡 What: Moved the static string and array splitting logic to the module scope
+// 🎯 Why: Prevents creating a new string and new array on every render of NarrativeScene
+// 📊 Impact: Minor memory optimization. Reduces garbage collection pressure.
+const NARRATIVE_TEXT = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
+const NARRATIVE_WORDS = NARRATIVE_TEXT.split(" ")
+
+// ⚡ Bolt Optimization: Extracted AnimatedWord component
+// 💡 What: Created a new component for individual words in the narrative scene
+// 🎯 Why: Fixes a Rules of Hooks violation where `useTransform` was being called inside a `.map()` loop.
+// 📊 Impact: Ensures hook order stability and prevents potential React rendering bugs/memory leaks.
+function AnimatedWord({ word, i, totalWords, scrollYProgress }: { word: string, i: number, totalWords: number, scrollYProgress: any }) {
+  const start = i / totalWords
+  const end = start + (1 / totalWords)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -67,23 +96,19 @@ function NarrativeScene() {
     offset: ["start 80%", "end 50%"]
   })
 
-  const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {NARRATIVE_WORDS.map((word, i) => (
+            <AnimatedWord
+              key={i}
+              word={word}
+              i={i}
+              totalWords={NARRATIVE_WORDS.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
