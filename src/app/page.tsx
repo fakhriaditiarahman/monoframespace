@@ -332,7 +332,8 @@ function AboutScene() {
                       height={40}
                       className="h-8 md:h-10 max-w-[120px] object-contain brightness-0 invert opacity-50 group-hover/logo:opacity-100 transition-all duration-300"
                       onError={(e) => {
-                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${partner.name}&background=random&color=fff&font-size=0.33&length=3&rounded=true`;
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=random&color=fff&font-size=0.33&length=3&rounded=true`;
                         e.currentTarget.className = "h-10 md:h-14 object-contain opacity-50 group-hover/logo:opacity-100 transition-all duration-300 grayscale";
                       }}
                     />
