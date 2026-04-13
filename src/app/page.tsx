@@ -12,6 +12,11 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   const scale = useTransform(scrollYProgress, [0, 0.6], [1, 20])
   const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
   const blur = useTransform(scrollYProgress, [0, 0.6, 0.8], ["blur(0px)", "blur(10px)", "blur(40px)"])
+  // ⚡ Bolt Optimization: Extracted hook call to the top level of the component
+  // 💡 What: Moved the useTransform hook call outside the JSX inline style prop
+  // 🎯 Why: Violating the Rules of Hooks by calling it inline inside a style prop can cause hook order instability and re-render bugs.
+  // 📊 Impact: Guarantees hook order stability and prevents potential memory leaks or re-render bugs.
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
   return (
     <section className="relative h-[180vh] bg-blue-50">
@@ -42,7 +47,7 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 
         {/* Scroll Indicator */}
         <motion.div
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+          style={{ opacity: scrollIndicatorOpacity }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
         >
           <span className="text-xs tracking-widest uppercase font-bold text-blue-800/60">Scroll down</span>
@@ -60,6 +65,22 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+// ⚡ Bolt Optimization: Extracted loop body into a separate functional component
+// 💡 What: Moved the `words.map` loop body into `NarrativeWord` component
+// 🎯 Why: Calling hooks (`useTransform`) inside an array `.map()` loop violates React's Rules of Hooks and can cause severe bugs.
+// 📊 Impact: Fixes a Rules of Hooks violation, avoids potential memory leaks, and ensures hook order stability.
+function NarrativeWord({ word, index, totalWords, scrollYProgress }: { word: string, index: number, totalWords: number, scrollYProgress: any }) {
+  const start = index / totalWords
+  const end = start + (1 / totalWords)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -74,16 +95,9 @@ function NarrativeScene() {
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {words.map((word, i) => (
+            <NarrativeWord key={i} word={word} index={i} totalWords={words.length} scrollYProgress={scrollYProgress} />
+          ))}
         </p>
       </div>
     </section>
@@ -270,6 +284,19 @@ function NewsScene() {
 }
 
 // ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
+// ⚡ Bolt Optimization: Extracted static array outside of component body
+// 💡 What: Moved the static `PARTNERS` array outside the `AboutScene` component
+// 🎯 Why: Declaring an array inside a component creates a new array reference on every render, triggering unnecessary re-renders in child components.
+// 📊 Impact: Minor memory optimization. Reduces garbage collection pressure and prevents unnecessary child component re-renders.
+const PARTNERS = [
+  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
+  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
+  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
+  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
+  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
+];
+
 function AboutScene() {
   return (
     <section className="py-32 md:py-48 bg-blue-950 text-white relative z-20 overflow-hidden">
@@ -315,14 +342,7 @@ function AboutScene() {
               <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center">
-                {[
-                  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
-                  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
-                  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-                  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
-                  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
-                  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
-                ].map((partner, i) => (
+                {PARTNERS.map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
                     {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
                     <Image
@@ -352,6 +372,16 @@ function AboutScene() {
 }
 
 // ---- SCENE 7: SOCIALS (SOSIAL MEDIA PRODUK) ----
+// ⚡ Bolt Optimization: Extracted static array outside of component body
+// 💡 What: Moved the static `SOCIALS` array outside the `SocialsScene` component
+// 🎯 Why: Declaring an array inside a component creates a new array reference on every render, triggering unnecessary re-renders in child components.
+// 📊 Impact: Minor memory optimization. Reduces garbage collection pressure and prevents unnecessary child component re-renders.
+const SOCIALS = [
+  { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
+  { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
+  { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
+];
+
 function SocialsScene() {
   return (
     <section className="py-24 md:py-32 bg-blue-50 relative z-20">
@@ -362,11 +392,7 @@ function SocialsScene() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-6 md:gap-8 max-w-5xl">
-          {[
-            { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
-            { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
-            { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
-          ].map((soc, i) => (
+          {SOCIALS.map((soc, i) => (
             <motion.a
               href="#"
               key={i}
