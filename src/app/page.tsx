@@ -13,6 +13,11 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
   const blur = useTransform(scrollYProgress, [0, 0.6, 0.8], ["blur(0px)", "blur(10px)", "blur(40px)"])
 
+  // ⚡ Bolt Optimization: Extracted useTransform from inline JSX prop
+  // 💡 What: Moved useTransform to the top level of the component
+  // 🎯 Why: Violating React's Rules of Hooks by calling hooks directly inline within JSX props. Always extract these hook calls to the top level of the functional component to guarantee hook order stability.
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+
   return (
     <section className="relative h-[180vh] bg-blue-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -42,7 +47,7 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 
         {/* Scroll Indicator */}
         <motion.div
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+          style={{ opacity: scrollIndicatorOpacity }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
         >
           <span className="text-xs tracking-widest uppercase font-bold text-blue-800/60">Scroll down</span>
@@ -60,6 +65,24 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+const NARRATIVE_TEXT = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
+const NARRATIVE_WORDS = NARRATIVE_TEXT.split(" ")
+
+function NarrativeWord({ word, i, scrollYProgress }: { word: string, i: number, scrollYProgress: any }) {
+  // ⚡ Bolt Optimization: Extracted useTransform hook to component top-level and avoid array map hook violation
+  // 💡 What: Extracted the .map() body into a separate component.
+  // 🎯 Why: Calling hooks (like Framer Motion's useTransform) inside array .map() loops violates React's Rules of Hooks. Always extract the loop body into a separate functional component to ensure hook order stability and prevent memory leaks or re-render bugs.
+  const start = i / NARRATIVE_WORDS.length
+  const end = start + (1 / NARRATIVE_WORDS.length)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -67,23 +90,13 @@ function NarrativeScene() {
     offset: ["start 80%", "end 50%"]
   })
 
-  const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {NARRATIVE_WORDS.map((word, i) => (
+            <NarrativeWord key={i} word={word} i={i} scrollYProgress={scrollYProgress} />
+          ))}
         </p>
       </div>
     </section>
