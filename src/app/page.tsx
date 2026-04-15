@@ -13,6 +13,9 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
   const blur = useTransform(scrollYProgress, [0, 0.6, 0.8], ["blur(0px)", "blur(10px)", "blur(40px)"])
 
+  // ⚡ Bolt Optimization: Extracted inline hook from JSX to comply with React's Rules of Hooks
+  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+
   return (
     <section className="relative h-[180vh] bg-blue-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -42,7 +45,7 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 
         {/* Scroll Indicator */}
         <motion.div
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+          style={{ opacity: indicatorOpacity }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none"
         >
           <span className="text-xs tracking-widest uppercase font-bold text-blue-800/60">Scroll down</span>
@@ -60,6 +63,28 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+function AnimatedWord({
+  word,
+  index,
+  totalWords,
+  scrollYProgress,
+}: {
+  word: string;
+  index: number;
+  totalWords: number;
+  scrollYProgress: any;
+}) {
+  const start = index / totalWords;
+  const end = start + 1 / totalWords;
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1]);
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  );
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -74,16 +99,20 @@ function NarrativeScene() {
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {/*
+            ⚡ Bolt Optimization: Extracted AnimatedWord component
+            - Prevents violation of React's Rules of Hooks by moving useTransform out of the map loop
+            - Ensures hook order stability and prevents memory leaks
+          */}
+          {words.map((word, i) => (
+            <AnimatedWord
+              key={i}
+              word={word}
+              index={i}
+              totalWords={words.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
