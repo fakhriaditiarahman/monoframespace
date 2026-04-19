@@ -17,10 +17,10 @@ const navItems = [
     label: "Produk",
     href: "#",
     children: [
-      { label: "Studio", href: "/studio" },
-      { label: "Monodev", href: "/monodev" },
-      { label: "Monobox", href: "/monobox" },
-      { label: "Mono Creative", href: "/monocreative" },
+      { label: "Studio", href: "https://studio.monoframe.id" },
+      { label: "Monodev", href: "https://monodev.monoframe.id" },
+      { label: "Monobox", href: "https://monobox.monoframe.id" },
+      { label: "Mono Creative", href: "https://monocreative.monoframe.id" },
     ]
   },
   { label: "Kontak", href: "#" },
@@ -52,23 +52,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-
-  const navItems = [
-    { label: "Beranda", href: "/" },
-    { label: "Berita", href: "#" },
-    { label: "Tentang", href: "#" },
-    {
-      label: "Produk",
-      href: "#",
-      children: [
-        { label: "Studio", href: "https://studio.monoframe.id" },
-        { label: "Monodev", href: "https://monodev.monoframe.id" },
-        { label: "Monobox", href: "https://monobox.monoframe.id" },
-        { label: "Mono Creative", href: "https://monocreative.monoframe.id" },
-      ]
-    },
-    { label: "Kontak", href: "#" },
-  ]
 
   return (
     <>
