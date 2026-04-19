@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion"
 import { Header } from "@/components/layout/Header"
 import { ProductSlider } from "@/components/home/ProductSlider"
 
@@ -59,6 +59,29 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
   )
 }
 
+// ⚡ Bolt Optimization: Extracted text and words to module scope
+// 💡 What: Moved static string and array creation outside the component
+// 🎯 Why: Prevents unnecessary memory allocation on every render
+// 📊 Impact: Minor memory optimization during high-frequency scroll events
+const NARRATIVE_TEXT = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
+const NARRATIVE_WORDS = NARRATIVE_TEXT.split(" ")
+
+// ⚡ Bolt Optimization: Extracted NarrativeWord component
+// 💡 What: Extracted the word mapping into a separate component
+// 🎯 Why: Fixes a severe React hooks violation where useTransform was called inside a map loop
+// 📊 Impact: Prevents memory leaks, hook order instability, and potential crashes during re-renders
+function NarrativeWord({ word, index, totalWords, scrollYProgress }: { word: string, index: number, totalWords: number, scrollYProgress: MotionValue<number> }) {
+  const start = index / totalWords
+  const end = start + (1 / totalWords)
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
 function NarrativeScene() {
   const containerRef = React.useRef(null)
@@ -67,23 +90,19 @@ function NarrativeScene() {
     offset: ["start 80%", "end 50%"]
   })
 
-  const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {NARRATIVE_WORDS.map((word, i) => (
+            <NarrativeWord
+              key={i}
+              word={word}
+              index={i}
+              totalWords={NARRATIVE_WORDS.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
@@ -270,6 +289,19 @@ function NewsScene() {
 }
 
 // ---- SCENE 6: ABOUT & JOURNEY (TENTANG & PERJALANAN) ----
+// ⚡ Bolt Optimization: Extracted PARTNERS array to module scope
+// 💡 What: Moved static array creation outside the AboutScene component
+// 🎯 Why: Prevents recreating the array of objects on every render
+// 📊 Impact: Minor memory optimization, reduces garbage collection overhead
+const PARTNERS = [
+  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
+  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
+  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
+  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
+  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
+];
+
 function AboutScene() {
   return (
     <section className="py-32 md:py-48 bg-blue-950 text-white relative z-20 overflow-hidden">
@@ -315,14 +347,7 @@ function AboutScene() {
               <div className="absolute inset-0 bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <h3 className="text-blue-400 font-bold uppercase tracking-widest mb-10 text-center text-sm">Dipercaya Oleh / Partner Kerjasama</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 items-center justify-items-center">
-                {[
-                  { name: "Gojek", url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Gojek_logo_2019.svg" },
-                  { name: "Tokopedia", url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Tokopedia.svg" },
-                  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-                  { name: "BCA", url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" },
-                  { name: "Pertamina", url: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pertamina_Logo.svg" },
-                  { name: "GitHub", url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
-                ].map((partner, i) => (
+                {PARTNERS.map((partner, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.05 }} className="w-full flex justify-center group/logo">
                     {/* ⚡ Bolt Optimization: Replaced <img> with next/image */}
                     <Image
@@ -351,6 +376,16 @@ function AboutScene() {
   )
 }
 
+// ⚡ Bolt Optimization: Extracted SOCIAL_LINKS array to module scope
+// 💡 What: Moved static array creation outside the SocialsScene component
+// 🎯 Why: Prevents recreating the array of objects on every render
+// 📊 Impact: Minor memory optimization, reduces garbage collection overhead
+const SOCIAL_LINKS = [
+  { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
+  { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
+  { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
+];
+
 // ---- SCENE 7: SOCIALS (SOSIAL MEDIA PRODUK) ----
 function SocialsScene() {
   return (
@@ -362,11 +397,7 @@ function SocialsScene() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 mx-auto gap-6 md:gap-8 max-w-5xl">
-          {[
-            { tag: "@monobox.id", name: "Monobox", color: "from-pink-500 to-rose-600", shadow: "shadow-pink-500/20" },
-            { tag: "@monodev.id", name: "Monodev", color: "from-blue-600 to-indigo-600", shadow: "shadow-blue-600/20" },
-            { tag: "@monoframe.studio", name: "Studio", color: "from-sky-400 to-blue-500", shadow: "shadow-sky-400/20" },
-          ].map((soc, i) => (
+          {SOCIAL_LINKS.map((soc, i) => (
             <motion.a
               href="#"
               key={i}

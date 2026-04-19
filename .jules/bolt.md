@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-13 - [useTransform inside map loops]
+**Learning:** Found a severe hook violation where Framer Motion's `useTransform` hook was called inside an array `.map()` loop during rendering. React's Rules of Hooks forbid calling hooks conditionally or in loops, as this can cause unpredictable hook execution order, memory leaks, and application crashes when the array length changes or elements are re-rendered.
+**Action:** When mapping over an array to render animated items that require their own hooks (like calculating unique `useTransform` bounds based on index), always extract the loop body into a separate functional component. This ensures each item has its own stable hook lifecycle.
