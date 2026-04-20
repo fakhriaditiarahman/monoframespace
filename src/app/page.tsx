@@ -60,6 +60,19 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+// ⚡ Bolt Optimization: Extracted WordSpan component
+// 💡 What: Extracted the loop body into a separate functional component
+// 🎯 Why: Prevents calling Framer Motion's useTransform hook inside a .map() loop, ensuring hook order stability
+// 📊 Impact: Fixes a React Rules of Hooks violation, preventing memory leaks and re-render bugs
+function WordSpan({ word, start, end, scrollYProgress }: { word: string, start: number, end: number, scrollYProgress: any }) {
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -77,11 +90,8 @@ function NarrativeScene() {
           {words.map((word, i) => {
             const start = i / words.length
             const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
             return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
+              <WordSpan key={i} word={word} start={start} end={end} scrollYProgress={scrollYProgress} />
             )
           })}
         </p>
