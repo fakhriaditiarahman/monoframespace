@@ -7,17 +7,9 @@
 - Network:       http://192.168.0.2:3000
 
 ✓ Starting...
-✓ Ready in 1063ms
-
-warn - The class `duration-[20s]` is ambiguous and matches multiple utilities.
-warn - If this is content and not a class, replace it with `duration-&lsqb;20s&rsqb;` to silence this warning.
-○ Compiling /monodev ...
- GET /monodev 200 in 5.9s (compile: 5.2s, render: 728ms)
- GET / 200 in 2.3s (compile: 2.1s, render: 235ms)
- GET /studio 200 in 1020ms (compile: 863ms, render: 157ms)
-⨯ upstream image response failed for https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600 404
- GET /monobox 200 in 912ms (compile: 808ms, render: 104ms)
-⨯ upstream image response failed for https://images.unsplash.com/photo-1500002000000?w=100 404
-⨯ upstream image response failed for https://images.unsplash.com/photo-1500001000000?w=100 404
-⨯ upstream image response failed for https://images.unsplash.com/photo-1500004000000?w=100 404
-⨯ upstream image response failed for https://images.unsplash.com/photo-1500003000000?w=100 404
+✓ Ready in 1067ms
+○ Compiling / ...
+ GET / 200 in 8.0s (compile: 7.2s, render: 807ms)
+ GET / 200 in 153ms (compile: 8ms, render: 145ms)
+ GET / 200 in 126ms (compile: 5ms, render: 121ms)
+ GET / 200 in 134ms (compile: 6ms, render: 128ms)
