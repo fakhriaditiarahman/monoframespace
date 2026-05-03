@@ -1,0 +1,12 @@
+
+> monoframe@1.0.0 dev /app
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 1068ms
+○ Compiling / ...
+ GET / 200 in 8.1s (compile: 7.1s, render: 924ms)
