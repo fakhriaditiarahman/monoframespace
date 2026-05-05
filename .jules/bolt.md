@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## $(date +%Y-%m-%d) - Hooks in Map and Inline Props
+**Learning:** React hooks like `useTransform` called inside array `.map()` closures or inline JSX props (`style={{ opacity: useTransform(...) }}`) violate the Rules of Hooks by creating dynamic or unstable hook call orders.
+**Action:** Always extract the loop body or inline prop containing the hook into its own functional component or lift the hook call to the top level of the parent component to guarantee hook order stability and eliminate rendering bugs.
