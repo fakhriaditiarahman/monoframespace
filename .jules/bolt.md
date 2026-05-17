@@ -10,3 +10,6 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+## 2024-02-24 - [Extract Static String Processing from Render Loop]
+**Learning:** React components containing scroll-driven animations re-render frequently. Performing static string operations (like `text.split(" ")`) inside the component body forces JavaScript to reallocate arrays on every render, causing memory bloat and triggering frequent garbage collection pauses that degrade scrolling performance.
+**Action:** Always extract constant string definitions and expensive one-time string manipulations out of the React functional component scope so they are executed only once upon module load.
