@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-13 - [Bypass React render loop for high-frequency DOM updates]
+**Learning:** Found that `CustomCursor` inside `GlobalAnimations.tsx` used React `useState` to update cursor text based on hover events. This caused React to continuously trigger re-renders on the main thread during high-frequency mouse movements and rapid hovers.
+**Action:** When optimizing high-frequency interactions (like custom cursor text updates) that don't require complex React reconciliation, directly update the DOM via `ref.current.textContent` inside event listeners to bypass the React render loop and eliminate unnecessary component re-renders entirely.
