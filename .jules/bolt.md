@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-13 - [Extract loop items into separate components]
+**Learning:** Found a pattern in `NarrativeScene` where `Framer Motion`'s `useTransform` hook was called inside a `.map()` loop block. This violates React's Rules of Hooks because the hook calls are dynamically generated based on array length, which can lead to unstable hook order, memory leaks, or re-render bugs.
+**Action:** Always extract the body of a `.map()` loop that uses hooks into a separate functional component (e.g., `NarrativeWord`). This ensures each mapped item has its own stable component lifecycle and hook order, complying with React's Rules of Hooks while preserving the animation functionality. Additionally, moved static data generation (`text.split(' ')`) outside the render cycle to reduce garbage collection overhead on high-frequency render components.
