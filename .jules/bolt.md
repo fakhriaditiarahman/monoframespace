@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-13 - [Direct DOM manipulation for high-frequency interactions]
+**Learning:** High-frequency interactions (like `mouseover` to update a custom cursor text) that use `useState` trigger unnecessary React reconciliation and component re-renders on every update. This causes significant performance degradation and CPU load for simple visual updates in isolated components.
+**Action:** When optimizing high-frequency interactions that don't require complex React reconciliation, bypass the React render loop entirely. Directly update the DOM via `ref.current.textContent` (or similar direct DOM APIs) inside event listeners to eliminate unnecessary component re-renders.
