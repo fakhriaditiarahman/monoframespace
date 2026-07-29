@@ -1,0 +1,26 @@
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    context = browser.new_context(
+        record_video_dir="/home/jules/verification/videos",
+        viewport={"width": 1280, "height": 720}
+    )
+    page = context.new_page()
+    page.goto("http://localhost:3000")
+
+    # Wait for the page to load
+    page.wait_for_timeout(2000)
+
+    # Scroll down to NarrativeScene
+    page.evaluate("window.scrollTo(0, 1500)")
+    page.wait_for_timeout(1000)
+
+    page.evaluate("window.scrollTo(0, 2500)")
+    page.wait_for_timeout(1000)
+
+    # Capture screenshot
+    page.screenshot(path="/home/jules/verification/screenshots/narrative.png")
+
+    context.close()
+    browser.close()
