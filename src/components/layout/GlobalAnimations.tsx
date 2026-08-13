@@ -18,8 +18,11 @@ export function GlobalAnimations() {
 function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
-    const [cursorText, setCursorText] = useState('');
-    const [isHovering, setIsHovering] = useState(false);
+
+    // ⚡ Bolt Optimization: Removed React state (cursorText, isHovering)
+    // 💡 What: Replaced state updates with direct DOM mutations (ref.current.textContent)
+    // 🎯 Why: High-frequency hover events triggered React re-renders on the whole component, causing layout overhead
+    // 📊 Impact: Bypasses the React render loop entirely during cursor interactions, saving CPU cycles
 
     useEffect(() => {
         const cursor = cursorRef.current;
@@ -46,8 +49,7 @@ function CustomCursor() {
             const isClickable = target.closest('a') || target.closest('button') || target.closest('[role="button"]');
 
             if (elementWithCursorData) {
-                setCursorText(elementWithCursorData.getAttribute('data-cursor-text') || '');
-                setIsHovering(true);
+                if (textRef.current) textRef.current.textContent = elementWithCursorData.getAttribute('data-cursor-text') || '';
                 gsap.to(cursor, {
                     scale: 4,
                     backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -56,8 +58,7 @@ function CustomCursor() {
                 });
                 if (textRef.current) gsap.to(textRef.current, { opacity: 1, duration: 0.2 });
             } else if (isClickable) {
-                setCursorText('');
-                setIsHovering(true);
+                if (textRef.current) textRef.current.textContent = '';
                 gsap.to(cursor, {
                     scale: 1.5,
                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -67,8 +68,7 @@ function CustomCursor() {
                 });
                 if (textRef.current) gsap.to(textRef.current, { opacity: 0, duration: 0.2 });
             } else {
-                setCursorText('');
-                setIsHovering(false);
+                if (textRef.current) textRef.current.textContent = '';
                 gsap.to(cursor, {
                     scale: 1,
                     backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -80,8 +80,12 @@ function CustomCursor() {
             }
         };
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mouseover', handleMouseOver);
+        // ⚡ Bolt Optimization: Add { passive: true } to scroll/mouse event listeners
+        // 💡 What: Marked mousemove and mouseover event listeners as passive
+        // 🎯 Why: Tells browser we won't call preventDefault(), allowing compositor thread to continue unblocked
+        // 📊 Impact: Smoother page scrolling and interactions when the main thread is busy
+        window.addEventListener('mousemove', moveCursor, { passive: true });
+        window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
@@ -98,7 +102,6 @@ function CustomCursor() {
                 ref={textRef}
                 className="text-[4px] font-bold text-black tracking-widest opacity-0 pointer-events-none"
             >
-                {cursorText}
             </span>
         </div>
     );
