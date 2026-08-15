@@ -10,3 +10,7 @@
 ## 2025-02-13 - [Throttle high-frequency scroll events]
 **Learning:** High-frequency events like `scroll` that trigger state updates can cause layout thrashing. Note that `passive: true` has no effect on `scroll`, `mousemove`, or `mouseover` events for this purpose.
 **Action:** When optimizing high-frequency `scroll` events that trigger state updates, use `requestAnimationFrame` to throttle the updates and prevent layout thrashing.
+
+## 2025-02-14 - [Extract static values & Fix hooks in map]
+**Learning:** Calling React hooks like Framer Motion's `useTransform` inside an array `.map()` loop within a component's render function is a strict violation of React's Rules of Hooks. Additionally, defining static text and performing string splitting (e.g., `text.split(" ")`) inside a render loop causes unnecessary recalculations on every render, increasing garbage collection overhead.
+**Action:** Always extract the mapped iteration into a separate functional component (e.g., `NarrativeWord`) when using hooks inside a loop. Furthermore, move static variables and expensive operations (like string splitting) outside of the functional component so they are evaluated only once globally.
