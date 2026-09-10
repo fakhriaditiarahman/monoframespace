@@ -60,6 +60,38 @@ function HeroScene({ scrollYProgress }: { scrollYProgress: any }) {
 }
 
 // ---- SCENE 2: THE PROCESS (TEXT SCRUB) ----
+// ⚡ Bolt Optimization:
+// - Extracted static definitions (`NARRATIVE_TEXT` and `NARRATIVE_WORDS`) out of the functional component.
+// - This prevents unnecessary string splitting and array creation on every scroll-triggered render,
+//   significantly reducing garbage collection pressure.
+const NARRATIVE_TEXT = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
+const NARRATIVE_WORDS = NARRATIVE_TEXT.split(" ")
+
+function NarrativeWord({
+  word,
+  index,
+  totalWords,
+  scrollYProgress
+}: {
+  word: string,
+  index: number,
+  totalWords: number,
+  scrollYProgress: any
+}) {
+  const start = index / totalWords
+  const end = start + (1 / totalWords)
+  // ⚡ Bolt Optimization: Moved useTransform into a child component.
+  // - Calling useTransform inside a .map() loop in NarrativeScene violates React's Rules of Hooks.
+  // - Extracting this logic into NarrativeWord ensures hooks are called correctly at the top level.
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
+
+  return (
+    <motion.span style={{ opacity }} className="text-blue-950">
+      {word}
+    </motion.span>
+  )
+}
+
 function NarrativeScene() {
   const containerRef = React.useRef(null)
   const { scrollYProgress } = useScroll({
@@ -67,23 +99,19 @@ function NarrativeScene() {
     offset: ["start 80%", "end 50%"]
   })
 
-  const text = "Di Monoframe, kami percaya bahwa setiap momen, baris kode, dan pixel memiliki cerita. Kami menggabungkan seni visual dengan keunggulan teknis untuk menciptakan pengalaman digital yang tak terlupakan."
-  const words = text.split(" ")
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 bg-blue-50 relative z-20">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center md:text-left">
         <p className="text-3xl md:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] flex flex-wrap gap-x-[1vw] gap-y-2 md:gap-y-4 justify-center md:justify-start">
-          {words.map((word, i) => {
-            const start = i / words.length
-            const end = start + (1 / words.length)
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1])
-            return (
-              <motion.span key={i} style={{ opacity }} className="text-blue-950">
-                {word}
-              </motion.span>
-            )
-          })}
+          {NARRATIVE_WORDS.map((word, i) => (
+            <NarrativeWord
+              key={i}
+              word={word}
+              index={i}
+              totalWords={NARRATIVE_WORDS.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </p>
       </div>
     </section>
